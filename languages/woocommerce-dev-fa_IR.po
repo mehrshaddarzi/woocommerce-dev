@@ -1,0 +1,52 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WooCommerce For Developer\n"
+"POT-Creation-Date: 2020-08-10 09:08+0430\n"
+"PO-Revision-Date: 2020-08-10 09:09+0430\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: woocommerce-dev.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: woocommerce-dev.php:186
+msgid "Your installed PHP Version is:"
+msgstr "حداقل ورژن PHP برای نصب این افزونه:"
+
+#: woocommerce-dev.php:187
+msgid ""
+"The <strong>WooCommerce Dev</strong> plugin requires PHP version <strong>"
+msgstr ""
+
+#: woocommerce-dev.php:187
+msgid "</strong> or greater."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "WooCommerce For Developer"
+msgstr "کلاس های آماده برای توسعه پروژه های ووکامرس"
+
+#. Plugin URI of the plugin/theme
+#. Author URI of the plugin/theme
+msgid "https://realwp.net"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "A Plugin For Developing WooCommerce Project"
+msgstr "دستورات آماده برای توسعه پروژه های ووکامرس"
+
+#. Author of the plugin/theme
+msgid "Mehrshad Darzi"
+msgstr "مهرشاد درزی"
