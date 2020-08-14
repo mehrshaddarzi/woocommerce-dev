@@ -4,6 +4,58 @@ namespace WooCommerce_Dev;
 
 class WooCommerce_Helper
 {
+    /**
+     * Set Localize Filter for Woocommerce
+     *
+     * @Hook
+     * @param $value
+     * @param $option
+     * @return string|void
+     */
+    public static function set_localize_option($value, $option)
+    {
+        return __($value, 'woocommerce');
+    }
+
+    /**
+     * Get Option List Woocommerce
+     *
+     * @param bool $key
+     * @return mixed
+     */
+    public static function get_woocommerce_option($key = false)
+    {
+        $option = array(
+            'timezone' => wc_timezone_string(),
+            'currency' => get_woocommerce_currency(),
+            'currency_format' => get_woocommerce_currency_symbol(),
+            'tax_included' => wc_prices_include_tax(),
+            'shipping_enabled' => wc_shipping_enabled(),
+            'tax_enabled' => wc_tax_enabled(),
+            'review_ratings_enabled' => wc_review_ratings_enabled(),
+            'weight_unit' => get_option('woocommerce_weight_unit'),
+            'weight_unit_localize' => __(get_option('woocommerce_weight_unit'), 'woocommerce'),
+            'dimension_unit_localize' => __(get_option('woocommerce_dimension_unit'), 'woocommerce'),
+            'ssl_enabled' => ('yes' === get_option('woocommerce_force_ssl_checkout')),
+            'permalinks_enabled' => ('' !== get_option('permalink_structure')),
+        );
+
+        if (empty($key)) {
+            return $option;
+        }
+        return $option[$key];
+    }
+
+    /**
+     * Show Price With Symbol in Woocommerce
+     *
+     * @param $price
+     * @return string
+     */
+    public static function wc_price($price)
+    {
+        return strip_tags(wc_price($price));
+    }
 
     /**
      * Get Customer Detail
@@ -61,6 +113,9 @@ class WooCommerce_Helper
      */
     public static function get_page_url($type = 'cart')
     {
+        if ($type == "my-account") {
+            $type = "myaccount";
+        }
         return wc_get_page_permalink($type);
     }
 
@@ -80,6 +135,37 @@ class WooCommerce_Helper
     public static function clear_all_wc_notice()
     {
         wc_clear_notices();
+    }
+
+    /**
+     * Add New WC Session
+     *
+     * @param $key
+     * @param $value
+     */
+    public static function add_wc_session($key, $value)
+    {
+        WC()->session->set($key, $value);
+    }
+
+    /**
+     * Get WC Session
+     *
+     * @param $key
+     */
+    public static function get_wc_session($key)
+    {
+        return WC()->session->get($key);
+    }
+
+    /**
+     * Remove WC Session
+     *
+     * @param $key
+     */
+    public static function remove_wc_session($key)
+    {
+        WC()->session->__unset($key);
     }
 
     /**

@@ -4,7 +4,7 @@ namespace WooCommerce_Dev;
 
 use WP_MVC\ACF;
 
-class WooCommerce_Config
+class WooCommerce_Reset_Asset
 {
     public function __construct()
     {
@@ -101,4 +101,4 @@ class WooCommerce_Config
 
 }
 
-new WooCommerce_Config;
+new WooCommerce_Reset_Asset;

@@ -1,0 +1,88 @@
+{
+  "id": 125,
+  "name": "مکمل بلاکسی مدل ۱۴۳۲",
+  "slug": "%d9%85%da%a9%d9%85%d9%84-%d8%a8%d9%84%d8%a7%da%a9%d8%b3%db%8c-%d9%85%d8%af%d9%84-%db%b1%db%b4%db%b3%db%b2",
+  "permalink": "http://...",
+  "date_created": {
+    "date": "2020-08-10 17:51:35.000000",
+    "timezone_type": 3,
+    "timezone": "Asia/Tehran"
+  },
+  "date_modified": {
+    "date": "2020-08-11 09:37:15.000000",
+    "timezone_type": 3,
+    "timezone": "Asia/Tehran"
+  },
+  "status": "publish",
+  "featured": false,
+  "catalog_visibility": "visible",
+  "description": "",
+  "short_description": "برای حل این مسئله یک میکسی از کره بادام زمینی و ترکیب های مختلف برای وعده های صبحانه میان وعده وعده قبل تمرین وعده بعد تمرین و خودمون تست می کردیم و هوادار پیدا کرد و تصمیم گرفتم این رو توسعه بدم. و این محصول نه تنها برای ورزشکارا و برای همه مفیده و کالری خوبی داره",
+  "sku": "36958",
+  "price": "10000",
+  "regular_price": "12000",
+  "sale_price": "10000",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "total_sales": 0,
+  "tax_status": "taxable",
+  "tax_class": "",
+  "manage_stock": true,
+  "stock_quantity": 10,
+  "stock_status": "instock",
+  "backorders": "no",
+  "low_stock_amount": "",
+  "sold_individually": false,
+  "weight": "2.3",
+  "length": "10",
+  "width": "5",
+  "height": "10",
+  "upsell_ids": [
+  ],
+  "cross_sell_ids": [
+  ],
+  "parent_id": 0,
+  "reviews_allowed": true,
+  "purchase_note": "",
+  "attributes": {
+    "pa_color": {
+    }
+  },
+  "default_attributes": [
+  ],
+  "menu_order": 0,
+  "post_password": "",
+  "virtual": false,
+  "downloadable": false,
+  "category_ids": [
+    15
+  ],
+  "tag_ids": [
+  ],
+  "shipping_class_id": 0,
+  "downloads": [
+  ],
+  "image_id": "126",
+  "gallery_image_ids": [
+    127,
+    128
+  ],
+  "download_limit": -1,
+  "download_expiry": -1,
+  "rating_counts": [
+  ],
+  "average_rating": "0",
+  "review_count": 0,
+  "meta_data": [
+  ],
+  "product_type": "simple",
+  "image_thumbnail_src": "http://xtech.local/wp-content/uploads/2020/08/01-150x150.png",
+  "weight-rendered": "2.3 کیلوگرم",
+  "dimensions-rendered": "10 × 5 × 10 سانتیمتر",
+  "is_on_sale": true,
+  "price_off": 2000,
+  "percentage_off": 17,
+  "is_in_stock": true,
+  "get_min_purchase_quantity": 1,
+  "get_max_purchase_quantity": 10
+}

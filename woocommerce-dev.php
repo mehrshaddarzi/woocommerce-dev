@@ -154,11 +154,51 @@ class WOOCOMMERCE_DEV
         /**
          * Load WooCommerce
          */
-        include_once dirname(__FILE__) . '/class/config.php';
         include_once dirname(__FILE__) . '/class/helper.php';
         include_once dirname(__FILE__) . '/class/cart.php';
         include_once dirname(__FILE__) . '/class/coupon.php';
         include_once dirname(__FILE__) . '/class/order.php';
+        include_once dirname(__FILE__) . '/class/location.php';
+        include_once dirname(__FILE__) . '/class/product.php';
+        include_once dirname(__FILE__) . '/class/payment.php';
+
+        /**
+         * Persian WooCommerce
+         */
+        if (get_locale() == "fa_IR") {
+            include_once dirname(__FILE__) . '/class/persian-woocommerce.php';
+        }
+
+        /**
+         * Hook List
+         */
+        include_once dirname(__FILE__) . '/hook/reset-asset.php';
+
+        /*
+         * Additional
+         */
+        include_once dirname(__FILE__) . '/additional/multiple-shipping.php';
+        include_once dirname(__FILE__) . '/additional/yith-affiliates.php';
+
+        /**
+         * Load gateway
+         */
+        add_action( 'plugins_loaded', array($this, 'load_gateway_list'), 10 );
+    }
+
+    /**
+     * Load Gateway List
+     */
+    public function load_gateway_list()
+    {
+
+        /**
+         * Persian WooCommerce
+         */
+        if (get_locale() == "fa_IR") {
+            include_once dirname(__FILE__) . '/gateway/payir-json.php';
+        }
+
     }
 
     /**
@@ -205,3 +245,15 @@ function woocommerce_dev()
 
 // Global for backwards compatibility.
 $GLOBALS['woocommerce-dev'] = woocommerce_dev();
+
+add_action('wp_loaded', function () {
+
+    //echo '<pre>';
+    //echo json_encode(\WooCommerce_Dev\WooCommerce_Product::get(125, array('thumbnail_size' => 'thumbnail')));
+    //print_r(\WooCommerce_Dev\WooCommerce_Payment::get_list());
+    //echo json_encode(\WooCommerce_Dev\WooCommerce_Payment::get_list());
+    //var_dump(WooCommerce_Dev\WooCommerce_Helper::get_woocommerce_option());
+
+    //var_dump(new WC_Cart()->get_data());
+    //exit;
+});
