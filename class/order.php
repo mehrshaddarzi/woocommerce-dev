@@ -22,14 +22,29 @@ class WooCommerce_Order
      * @see https://stackoverflow.com/questions/49385700/woocommerce-wc-create-order-not-working
      * @see https://github.com/woocommerce/woocommerce/blob/29bc98816ea411c82968afe072644e6f9fc88388/includes/class-wc-checkout.php#L319
      * @see https://stackoverflow.com/questions/53853204/save-custom-cart-item-data-from-dynamic-created-cart-on-order-creation-in-woocom
-     * @param $data
+     * @param $args
      * @return int
      */
-    public static function create_checkout_order($data)
+    public static function create_checkout_order($args)
     {
-        $data = array(
-            'billing_email' => ''
+        $default = array(
+            'billing_email' => '',
+            'payment_method' => '',
+            'user_shipping' => array(
+                'first_name' => '',
+                'last_name' => '',
+                'company' => '',
+                'email' => '',
+                'phone' => '',
+                'address_1' => '',
+                'address_2' => '',
+                'city' => '',
+                'state' => '',
+                'postcode' => '',
+                'country' => ''
+            )
         );
+        $data = wp_parse_args($default, $args);
 
         // Get Billing Email
         if (is_user_logged_in() and empty($data['billing_email'])) {
@@ -39,8 +54,18 @@ class WooCommerce_Order
             }
         }
 
-        //$example = array('payment_method' => '');
-        return WC()->checkout->create_order($data);
+        // Create Check Out Order
+        $order_id = WC()->checkout->create_order($data); // return $order_id
+
+        // Set User Address
+        $order = wc_get_order($order_id);
+        $order->set_address($data['user_shipping'], 'billing');
+        $order->set_address($data['user_shipping'], 'shipping');
+        $order->calculate_totals();
+        $order->save();
+
+        // Return $order ID
+        return $order_id;
     }
 
     /**

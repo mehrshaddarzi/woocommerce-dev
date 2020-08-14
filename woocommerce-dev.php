@@ -173,6 +173,7 @@ class WOOCOMMERCE_DEV
          * Hook List
          */
         include_once dirname(__FILE__) . '/hook/reset-asset.php';
+        include_once dirname(__FILE__) . '/hook/redirect-payment.php';
 
         /*
          * Additional

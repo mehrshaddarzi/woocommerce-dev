@@ -149,8 +149,6 @@ class WC_PayIR_Json_Gateway extends \WC_Payment_Gateway
         }
         $order = wc_get_order($order_id);
 
-
-
         // Verify
         $result = json_decode($this->api_verify($api, $token));
         if (isset($result->status)) {

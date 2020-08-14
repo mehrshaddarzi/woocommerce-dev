@@ -46,50 +46,50 @@ class WooCommerce_Payment
                 if ($gateway->enabled == 'yes') {
 
                     // Get Order
-                    $order = (array) get_option( 'woocommerce_gateway_order' );
+                    $order = (array)get_option('woocommerce_gateway_order');
 
                     // Setting
                     $settings = array();
                     $gateway->init_form_fields();
-                    foreach ( $gateway->form_fields as $id => $field ) {
+                    foreach ($gateway->form_fields as $id => $field) {
                         // Make sure we at least have a title and type.
-                        if ( empty( $field['title'] ) || empty( $field['type'] ) ) {
+                        if (empty($field['title']) || empty($field['type'])) {
                             continue;
                         }
                         // Ignore 'title' settings/fields -- they are UI only.
-                        if ( 'title' === $field['type'] ) {
+                        if ('title' === $field['type']) {
                             continue;
                         }
                         // Ignore 'enabled' and 'description' which get included elsewhere.
-                        if ( in_array( $id, array( 'enabled', 'description' ), true ) ) {
+                        if (in_array($id, array('enabled', 'description'), true)) {
                             continue;
                         }
                         $data = array(
-                            'id'          => $id,
-                            'label'       => empty( $field['label'] ) ? $field['title'] : $field['label'],
-                            'description' => empty( $field['description'] ) ? '' : $field['description'],
-                            'type'        => $field['type'],
-                            'value'       => empty( $gateway->settings[ $id ] ) ? '' : $gateway->settings[ $id ],
-                            'default'     => empty( $field['default'] ) ? '' : $field['default'],
-                            'tip'         => empty( $field['description'] ) ? '' : $field['description'],
-                            'placeholder' => empty( $field['placeholder'] ) ? '' : $field['placeholder'],
+                            'id' => $id,
+                            'label' => empty($field['label']) ? $field['title'] : $field['label'],
+                            'description' => empty($field['description']) ? '' : $field['description'],
+                            'type' => $field['type'],
+                            'value' => empty($gateway->settings[$id]) ? '' : $gateway->settings[$id],
+                            'default' => empty($field['default']) ? '' : $field['default'],
+                            'tip' => empty($field['description']) ? '' : $field['description'],
+                            'placeholder' => empty($field['placeholder']) ? '' : $field['placeholder'],
                         );
-                        if ( ! empty( $field['options'] ) ) {
+                        if (!empty($field['options'])) {
                             $data['options'] = $field['options'];
                         }
-                        $settings[ $id ] = $data;
+                        $settings[$id] = $data;
                     }
 
                     // Prepare Item
-                    $item  = array(
-                        'id'                 => $gateway->id,
-                        'title'              => $gateway->title,
-                        'description'        => $gateway->description,
-                        'order'              => isset( $order[ $gateway->id ] ) ? $order[ $gateway->id ] : '',
-                        'enabled'            => ( 'yes' === $gateway->enabled ),
-                        'method_title'       => $gateway->get_method_title(),
+                    $item = array(
+                        'id' => $gateway->id,
+                        'title' => $gateway->title,
+                        'description' => $gateway->description,
+                        'order' => isset($order[$gateway->id]) ? $order[$gateway->id] : '',
+                        'enabled' => ('yes' === $gateway->enabled),
+                        'method_title' => $gateway->get_method_title(),
                         'method_description' => $gateway->get_method_description(),
-                        'settings'           => $settings,
+                        'settings' => $settings,
                     );
 
                     $enabled_gateways[$gateway_key] = $item;
@@ -101,6 +101,44 @@ class WooCommerce_Payment
             return $enabled_gateways; // Return Only enabled in Setting
         }
         return $gateways; // Return All
+    }
+
+    /**
+     * Process Payment Order
+     *
+     * @param $order_id
+     * @return mixed|void
+     */
+    public static function process_order_payment($order_id)
+    {
+        // Get Order
+        $order = wc_get_order($order_id);
+
+        // Start Payment
+        // @see https://stackoverflow.com/questions/31787244/woocommerce-create-an-order-programmatically-and-redirect-to-payment
+        // @see https://stackoverflow.com/questions/36969532/change-order-status-just-after-payment-in-woocommerce
+        //update_post_meta( $order_id, '_payment_method', 'ideal' );
+        //update_post_meta( $order_id, '_payment_method_title', 'iDeal' );
+
+        // Store Order ID in session so it can be re-used after payment failure
+        WC()->session->set('order_awaiting_payment', $order_id);
+
+        // Process Payment
+        $available_gateways = WC()->payment_gateways->get_available_payment_gateways();
+        $result = $available_gateways[$order->get_payment_method()]->process_payment($order);
+
+        // Redirect to success/confirmation/payment page
+        if ($result['result'] == 'success') {
+            $result = apply_filters('woocommerce_payment_successful_result', $result, $order_id);
+            return $result;
+            /**
+             * $result is and array contain:
+             * ['redirect'] is Url
+             * ['result'] is status | success, error
+             */
+        }
+
+        return $result;
     }
 }
 
