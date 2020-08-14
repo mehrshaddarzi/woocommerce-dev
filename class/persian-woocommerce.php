@@ -15,6 +15,16 @@ class Persian_WooCommerce
         // Remove Pay.Ir Gateway
         add_filter('woocommerce_payment_gateways', array($this, 'woo_add_gateway_class'), 999);
 
+        // Remove Dashboard Widget
+        add_action('wp_dashboard_setup', array($this, 'remove_dashboard_meta_boxes'), 9999 );
+    }
+
+    /**
+     * Remove Widget Dashboard
+     */
+    function remove_dashboard_meta_boxes()
+    {
+        remove_meta_box( 'persian_woocommerce_feed', 'dashboard', 'normal' );
     }
 
     /**
