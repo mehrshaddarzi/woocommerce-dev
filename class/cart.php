@@ -14,6 +14,10 @@ class WooCommerce_Cart
     public function __construct()
     {
 
+        // Disable All Message Cart
+        // @see https://stackoverflow.com/questions/37126658/hide-added-to-cart-message-in-woocommerce
+        add_filter( 'wc_add_to_cart_message_html', '__return_false' );
+
     }
 
     /**
