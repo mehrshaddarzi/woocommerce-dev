@@ -182,6 +182,11 @@ class WOOCOMMERCE_DEV
         include_once dirname(__FILE__) . '/additional/yith-affiliates.php';
 
         /**
+         * Rewrite
+         */
+        include_once dirname(__FILE__) . '/rewrite/rewrite.php';
+
+        /**
          * Load gateway
          */
         add_action( 'plugins_loaded', array($this, 'load_gateway_list'), 10 );
