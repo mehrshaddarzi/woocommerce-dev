@@ -158,7 +158,20 @@ class WooCommerce_Product
         return wc_get_product_id_by_sku($sku);
     }
 
-
+    /**
+     * Check Exist Product
+     *
+     * @param $product_id
+     * @param string $post_status
+     * @param string $post_type
+     * @return bool
+     */
+    public static function exist($product_id, $post_status = 'publish', $post_type = 'product')
+    {
+        global $wpdb;
+        $query = $wpdb->get_var("SELECT count(*) FROM `$wpdb->posts` WHERE `ID` = $product_id AND `post_type` = '$post_type' AND `post_status` = '$post_status'");
+        return (int)$query > 0;
+    }
 }
 
 new WooCommerce_Product;

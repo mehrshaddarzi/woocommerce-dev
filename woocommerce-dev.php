@@ -178,8 +178,10 @@ class WOOCOMMERCE_DEV
         /*
          * Additional
          */
-        include_once dirname(__FILE__) . '/additional/multiple-shipping.php';
+        include_once dirname(__FILE__) . '/additional/multiple-shipping/multiple-shipping.php';
         include_once dirname(__FILE__) . '/additional/yith-affiliates.php';
+        include_once dirname(__FILE__) . '/additional/compare/yith-compare.php';
+        include_once dirname(__FILE__) . '/additional/compare/rewrite.php';
 
         /**
          * Rewrite

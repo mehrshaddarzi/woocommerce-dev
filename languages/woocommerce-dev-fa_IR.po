@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce For Developer\n"
-"POT-Creation-Date: 2020-08-10 09:08+0430\n"
-"PO-Revision-Date: 2020-08-10 09:09+0430\n"
+"POT-Creation-Date: 2020-08-19 19:51+0430\n"
+"PO-Revision-Date: 2020-08-19 19:52+0430\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -21,16 +21,56 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: woocommerce-dev.php:186
+#: additional/compare/rewrite.php:35
+msgid "Invalid product ID"
+msgstr "شناسه محصول نا معتبر هست"
+
+#: additional/compare/rewrite.php:61
+msgid "This product is in the product comparison list"
+msgstr "این محصول در سبد مقایسه محصولات وجود دارد."
+
+#: additional/compare/rewrite.php:81
+msgid "This product is not in the product comparison list"
+msgstr "این محصول در سبد مقایسه محصولات وجود ندارد"
+
+#: gateway/payir-json.php:26
+msgid "پی آی آر"
+msgstr ""
+
+#: gateway/payir-json.php:29
+msgid "درگاه پرداخت پی آی آر در بستر REST API"
+msgstr ""
+
+#: gateway/payir-json.php:80
+msgid "این درگاه پرداخت واحد پول انتخابی فروشگاه شما را قبول نمی کند"
+msgstr ""
+
+#: gateway/payir-json.php:90
+msgid "Enable/Disable"
+msgstr "فعال سازی / غیر فعال سازی"
+
+#: gateway/payir-json.php:97
+msgid "Title"
+msgstr "عنوان"
+
+#: gateway/payir-json.php:104
+msgid "Description"
+msgstr "توضیحات"
+
+#: gateway/payir-json.php:106
+msgid "This controls the description which the user sees during checkout."
+msgstr ""
+
+#: woocommerce-dev.php:234
 msgid "Your installed PHP Version is:"
 msgstr "حداقل ورژن PHP برای نصب این افزونه:"
 
-#: woocommerce-dev.php:187
+#: woocommerce-dev.php:235
 msgid ""
 "The <strong>WooCommerce Dev</strong> plugin requires PHP version <strong>"
 msgstr ""
 
-#: woocommerce-dev.php:187
+#: woocommerce-dev.php:235
 msgid "</strong> or greater."
 msgstr ""
 
