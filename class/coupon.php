@@ -80,6 +80,13 @@ class WooCommerce_Coupon
         );
     }
 
+    /**
+     * Get Coupon List
+     *
+     * @param array $arg
+     * @param string $field
+     * @return array
+     */
     public static function get_coupon_list($arg = array(), $field = 'all')
     {
         // Set base query arguments

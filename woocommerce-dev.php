@@ -258,7 +258,7 @@ add_action('wp_loaded', function () {
 
     //echo '<pre>';
     //echo json_encode(\WooCommerce_Dev\WooCommerce_Product::get(125, array('thumbnail_size' => 'thumbnail')));
-    //print_r(\WooCommerce_Dev\WooCommerce_Payment::get_list());
+    //echo json_encode((\WooCommerce_Dev\WooCommerce_Product::get(205)));
     //echo json_encode(\WooCommerce_Dev\WooCommerce_Payment::get_list());
     //var_dump(WooCommerce_Dev\WooCommerce_Helper::get_woocommerce_option());
 

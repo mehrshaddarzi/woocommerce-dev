@@ -2,7 +2,6 @@
 
 namespace WordPress_Rewrite_API_Request;
 
-use WooCommerce_Dev\WooCommerce_Product;
 use WooCommerce_Dev\WooCommerce_Yith_Compare;
 
 class wc_compare
@@ -18,27 +17,6 @@ class wc_compare
         wp_enqueue_script('woocommerce-compare-rewrite', \WOOCOMMERCE_DEV::$plugin_url . '/additional/compare/script.js', array('jquery', 'wp-rewrite-api'), \WOOCOMMERCE_DEV::$plugin_version, true);
     }
 
-    public static function _check_product_id()
-    {
-        // Check Require Params
-        if (!isset($_REQUEST['product_id'])) {
-            WordPress_Rewrite_API_Request::missing_params();
-        }
-
-        // Prepare params
-        $product_id = sanitize_text_field($_REQUEST['product_id']);
-
-        // Check Exist Product
-        if (!WooCommerce_Product::exist($_REQUEST['product_id'])) {
-            wp_send_json_error(array(
-                'code' => 'invalid_product_id',
-                'message' => __('Invalid product ID', 'woocommerce-dev'),
-            ), 400);
-        }
-
-        return $product_id;
-    }
-
     public static function _return_list()
     {
         $list = WooCommerce_Yith_Compare::get_list_products_compare();
@@ -52,7 +30,7 @@ class wc_compare
     public static function add()
     {
         // Product_id
-        $product_id = self::_check_product_id();
+        $product_id = wc::_check_product_id();
 
         // Check Has in Compare List
         if (WooCommerce_Yith_Compare::has_product_in_compare($product_id)) {
@@ -72,7 +50,7 @@ class wc_compare
     public static function remove()
     {
         // Product_id
-        $product_id = self::_check_product_id();
+        $product_id = wc::_check_product_id();
 
         // Check Has in Compare List
         if (!WooCommerce_Yith_Compare::has_product_in_compare($product_id)) {

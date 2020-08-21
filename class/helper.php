@@ -152,6 +152,7 @@ class WooCommerce_Helper
      * Get WC Session
      *
      * @param $key
+     * @return array|string|null
      */
     public static function get_wc_session($key)
     {
@@ -238,6 +239,73 @@ class WooCommerce_Helper
         //$terms = get_the_terms( 'taxslug', $post );
         //$sorted_terms = array();
         //sort_terms_hierarchically( $terms, $sorted_terms );
+    }
+
+    /**
+     * Format a unix timestamp or MySQL datetime into an RFC3339 datetime
+     *
+     * @param $timestamp
+     * @param bool $convert_to_utc
+     * @param bool $convert_to_gmt
+     * @return string
+     */
+    public static function format_datetime($timestamp, $convert_to_utc = false, $convert_to_gmt = false)
+    {
+        if ($convert_to_gmt) {
+            if (is_numeric($timestamp)) {
+                $timestamp = date('Y-m-d H:i:s', $timestamp);
+            }
+
+            $timestamp = get_gmt_from_date($timestamp);
+        }
+
+        if ($convert_to_utc) {
+            $timezone = new \DateTimeZone(wc_timezone_string());
+        } else {
+            $timezone = new \DateTimeZone('UTC');
+        }
+
+        try {
+
+            if (is_numeric($timestamp)) {
+                $date = new \DateTime("@{$timestamp}");
+            } else {
+                $date = new \DateTime($timestamp, $timezone);
+            }
+
+            // convert to UTC by adjusting the time based on the offset of the site's timezone
+            if ($convert_to_utc) {
+                $date->modify(-1 * $date->getOffset() . ' seconds');
+            }
+        } catch (\Exception $e) {
+
+            $date = new \DateTime('@0');
+        }
+
+        return $date->format('Y-m-d\TH:i:s\Z');
+    }
+
+    /**
+     * Object To Array
+     *
+     * @param $r
+     * @return array
+     */
+    public static function object_to_array($r)
+    {
+        if (is_object($r)) {
+            if (method_exists($r, 'toArray')) {
+                return $r->toArray(); // returns result directly
+            } else {
+                $r = get_object_vars($r);
+            }
+        }
+
+        if (is_array($r)) {
+            $r = array_map(array(__CLASS__, __METHOD__), $r); // recursive function call
+        }
+
+        return $r;
     }
 }
 

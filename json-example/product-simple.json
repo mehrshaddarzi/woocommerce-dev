@@ -1,88 +1,271 @@
 {
-  "id": 125,
-  "name": "مکمل بلاکسی مدل ۱۴۳۲",
-  "slug": "%d9%85%da%a9%d9%85%d9%84-%d8%a8%d9%84%d8%a7%da%a9%d8%b3%db%8c-%d9%85%d8%af%d9%84-%db%b1%db%b4%db%b3%db%b2",
-  "permalink": "http://...",
-  "date_created": {
-    "date": "2020-08-10 17:51:35.000000",
-    "timezone_type": 3,
-    "timezone": "Asia/Tehran"
-  },
-  "date_modified": {
-    "date": "2020-08-11 09:37:15.000000",
-    "timezone_type": 3,
-    "timezone": "Asia/Tehran"
-  },
+  "title": "قوطی آب میوه طبیعی گیلان",
+  "id": 205,
+  "created_at": "2020-08-08T17:17:27Z",
+  "updated_at": "2020-08-08T17:19:35Z",
+  "type": "variable",
   "status": "publish",
-  "featured": false,
-  "catalog_visibility": "visible",
-  "description": "",
-  "short_description": "برای حل این مسئله یک میکسی از کره بادام زمینی و ترکیب های مختلف برای وعده های صبحانه میان وعده وعده قبل تمرین وعده بعد تمرین و خودمون تست می کردیم و هوادار پیدا کرد و تصمیم گرفتم این رو توسعه بدم. و این محصول نه تنها برای ورزشکارا و برای همه مفیده و کالری خوبی داره",
-  "sku": "36958",
+  "downloadable": false,
+  "virtual": false,
+  "permalink": "http://localhost/orgame.ir/product/%d9%82%d9%88%d8%b7%db%8c-%d8%a2%d8%a8-%d9%85%db%8c%d9%88%d9%87-%d8%b7%d8%a8%db%8c%d8%b9%db%8c-%da%af%db%8c%d9%84%d8%a7%d9%86/",
+  "sku": "453",
   "price": "10000",
-  "regular_price": "12000",
-  "sale_price": "10000",
-  "date_on_sale_from": null,
-  "date_on_sale_to": null,
-  "total_sales": 0,
+  "regular_price": "",
+  "sale_price": null,
+  "price_html": "10,000 تومان",
+  "taxable": false,
   "tax_status": "taxable",
   "tax_class": "",
-  "manage_stock": true,
-  "stock_quantity": 10,
-  "stock_status": "instock",
-  "backorders": "no",
-  "low_stock_amount": "",
+  "managing_stock": true,
+  "stock_quantity": 20,
+  "in_stock": true,
+  "backorders_allowed": false,
+  "backordered": false,
   "sold_individually": false,
-  "weight": "2.3",
-  "length": "10",
-  "width": "5",
-  "height": "10",
+  "purchaseable": true,
+  "featured": false,
+  "visible": true,
+  "catalog_visibility": "visible",
+  "on_sale": true,
+  "product_url": "",
+  "button_text": "",
+  "weight": null,
+  "dimensions": {
+    "length": "",
+    "width": "",
+    "height": "",
+    "unit": "cm"
+  },
+  "shipping_required": true,
+  "shipping_taxable": true,
+  "shipping_class": "",
+  "shipping_class_id": null,
+  "description": "",
+  "short_description": "",
+  "reviews_allowed": true,
+  "average_rating": "0.00",
+  "rating_count": 0,
+  "related_ids": [
+    198
+  ],
   "upsell_ids": [
+
   ],
   "cross_sell_ids": [
+
   ],
   "parent_id": 0,
-  "reviews_allowed": true,
-  "purchase_note": "",
-  "attributes": {
-    "pa_color": {
+  "categories": [
+    {
+      "term_id": 15,
+      "name": "غذای تازه",
+      "slug": "fresh-food",
+      "term_group": 0,
+      "term_taxonomy_id": 15,
+      "taxonomy": "product_cat",
+      "description": "",
+      "parent": 0,
+      "count": 2,
+      "filter": "raw"
+    },
+    {
+      "term_id": 21,
+      "name": "پرتقال",
+      "slug": "orange",
+      "term_group": 0,
+      "term_taxonomy_id": 21,
+      "taxonomy": "product_cat",
+      "description": "",
+      "parent": 18,
+      "count": 2,
+      "filter": "raw"
+    },
+    {
+      "term_id": 18,
+      "name": "میوه تازه",
+      "slug": "fresh-fruit",
+      "term_group": 0,
+      "term_taxonomy_id": 18,
+      "taxonomy": "product_cat",
+      "description": "",
+      "parent": 15,
+      "count": 2,
+      "filter": "raw"
     }
-  },
-  "default_attributes": [
   ],
-  "menu_order": 0,
-  "post_password": "",
-  "virtual": false,
-  "downloadable": false,
-  "category_ids": [
-    15
+  "tags": [
+
   ],
-  "tag_ids": [
+  "images": [
+    {
+      "id": 203,
+      "created_at": "2020-08-08T16:46:08Z",
+      "updated_at": "2020-08-08T16:46:08Z",
+      "src": "http://localhost/orgame.ir/storage/2020/08/product-15.jpg",
+      "title": "product-15",
+      "alt": "",
+      "position": 0
+    },
+    {
+      "id": 202,
+      "created_at": "2020-08-08T16:46:07Z",
+      "updated_at": "2020-08-08T16:46:07Z",
+      "src": "http://localhost/orgame.ir/storage/2020/08/product-2.jpg",
+      "title": "product-2",
+      "alt": "",
+      "position": 1
+    }
   ],
-  "shipping_class_id": 0,
+  "featured_src": "http://localhost/orgame.ir/storage/2020/08/product-15.jpg",
+  "attributes": [
+    {
+      "name": "رنگ",
+      "slug": "color",
+      "position": 0,
+      "visible": true,
+      "variation": true,
+      "options": [
+        "آبی",
+        "قرمز"
+      ]
+    }
+  ],
   "downloads": [
-  ],
-  "image_id": "126",
-  "gallery_image_ids": [
-    127,
-    128
+
   ],
   "download_limit": -1,
   "download_expiry": -1,
-  "rating_counts": [
+  "download_type": "standard",
+  "purchase_note": "",
+  "total_sales": 0,
+  "variations": [
+    {
+      "id": 206,
+      "created_at": "2020-08-08T17:16:31Z",
+      "updated_at": "2020-08-08T17:17:25Z",
+      "downloadable": false,
+      "virtual": false,
+      "permalink": "http://localhost/orgame.ir/product/%d9%82%d9%88%d8%b7%db%8c-%d8%a2%d8%a8-%d9%85%db%8c%d9%88%d9%87-%d8%b7%d8%a8%db%8c%d8%b9%db%8c-%da%af%db%8c%d9%84%d8%a7%d9%86/?attribute_pa_color=blue",
+      "sku": "3695",
+      "price": "10000",
+      "regular_price": "10000",
+      "sale_price": null,
+      "taxable": false,
+      "tax_status": "taxable",
+      "tax_class": "",
+      "managing_stock": "parent",
+      "stock_quantity": 20,
+      "in_stock": true,
+      "backorders_allowed": false,
+      "backordered": false,
+      "purchaseable": true,
+      "visible": true,
+      "on_sale": false,
+      "weight": null,
+      "dimensions": {
+        "length": "",
+        "width": "",
+        "height": "",
+        "unit": "سانتیمتر"
+      },
+      "shipping_class": "",
+      "shipping_class_id": null,
+      "image": [
+        {
+          "id": 202,
+          "created_at": "2020-08-08T16:46:07Z",
+          "updated_at": "2020-08-08T16:46:07Z",
+          "src": "http://localhost/orgame.ir/storage/2020/08/product-2.jpg",
+          "title": "product-2",
+          "alt": "",
+          "position": 0
+        }
+      ],
+      "attributes": [
+        {
+          "name": "رنگ",
+          "slug": "pa_color",
+          "option": "blue"
+        }
+      ],
+      "downloads": [
+
+      ],
+      "download_limit": -1,
+      "download_expiry": -1
+    },
+    {
+      "id": 207,
+      "created_at": "2020-08-08T17:16:31Z",
+      "updated_at": "2020-08-08T17:17:25Z",
+      "downloadable": false,
+      "virtual": false,
+      "permalink": "http://localhost/orgame.ir/product/%d9%82%d9%88%d8%b7%db%8c-%d8%a2%d8%a8-%d9%85%db%8c%d9%88%d9%87-%d8%b7%d8%a8%db%8c%d8%b9%db%8c-%da%af%db%8c%d9%84%d8%a7%d9%86/?attribute_pa_color=red",
+      "sku": "963",
+      "price": "10000",
+      "regular_price": "15000",
+      "sale_price": "10000",
+      "taxable": false,
+      "tax_status": "taxable",
+      "tax_class": "",
+      "managing_stock": true,
+      "stock_quantity": 0,
+      "in_stock": false,
+      "backorders_allowed": false,
+      "backordered": false,
+      "purchaseable": true,
+      "visible": true,
+      "on_sale": true,
+      "weight": null,
+      "dimensions": {
+        "length": "",
+        "width": "",
+        "height": "",
+        "unit": "سانتیمتر"
+      },
+      "shipping_class": "",
+      "shipping_class_id": null,
+      "image": [
+        {
+          "id": 203,
+          "created_at": "2020-08-08T16:46:08Z",
+          "updated_at": "2020-08-08T16:46:08Z",
+          "src": "http://localhost/orgame.ir/storage/2020/08/product-15.jpg",
+          "title": "product-15",
+          "alt": "",
+          "position": 0
+        }
+      ],
+      "attributes": [
+        {
+          "name": "رنگ",
+          "slug": "pa_color",
+          "option": "red"
+        }
+      ],
+      "downloads": [
+
+      ],
+      "download_limit": -1,
+      "download_expiry": -1
+    }
   ],
-  "average_rating": "0",
-  "review_count": 0,
-  "meta_data": [
+  "parent": [
+
   ],
-  "product_type": "simple",
-  "image_thumbnail_src": "http://xtech.local/wp-content/uploads/2020/08/01-150x150.png",
-  "weight-rendered": "2.3 کیلوگرم",
-  "dimensions-rendered": "10 × 5 × 10 سانتیمتر",
-  "is_on_sale": true,
-  "price_off": 2000,
-  "percentage_off": 17,
-  "is_in_stock": true,
+  "grouped_products": [
+
+  ],
+  "menu_order": 0,
+  "thumbnail_id": 203,
+  "weight_rendered": "نامعلوم",
+  "dimensions_rendered": "نامعلوم",
+  "discount": {
+    "is_on_sale": true,
+    "price_off": 0,
+    "percentage_off": 0
+  },
   "get_min_purchase_quantity": 1,
-  "get_max_purchase_quantity": 10
+  "get_max_purchase_quantity": 20,
+  "product_type": "محصول متغیر"
 }

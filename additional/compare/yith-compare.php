@@ -167,7 +167,7 @@ class WooCommerce_Yith_Compare
     public static function get_default_compare_fields($with_attr = true)
     {
         return \YITH_Woocompare_Helper::standard_fields();
-        // use yith_woocompare_standard_fields_array for adding Item
+        // use apply_filters( 'yith_woocompare_standard_fields_array', $fields ); for adding Item
     }
 
     /**

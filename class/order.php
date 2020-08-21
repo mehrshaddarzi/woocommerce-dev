@@ -12,6 +12,201 @@ class WooCommerce_Order
     public function __construct()
     {
 
+        // Disable All Email Order Notification
+        //@see https://docs.woocommerce.com/document/unhookremove-woocommerce-emails/
+        add_action('woocommerce_email', array($this, 'unhook_those_pesky_emails'), 999);
+        add_filter('woocommerce_email_actions', function () {
+            return array();
+        }, 999);
+
+    }
+
+    /**
+     * Get Order Detail By ID
+     *
+     * @see https://stackoverflow.com/questions/39401393/how-to-get-woocommerce-order-details
+     * @param $order_id
+     * @param array $filter
+     * @return array
+     */
+    public static function get($order_id, $filter = array())
+    {
+        // Get an instance of the WC_Order object
+        $order = wc_get_order($order_id);
+
+        // Get the decimal precession.
+        $dp = apply_filters('woocommerce_dev_order_dp', 0);
+        $expand = array();
+        if (!empty($filter['expand'])) {
+            $expand = explode(',', $filter['expand']);
+        }
+
+        /**
+         * Expand List:
+         * $filter['expand'] = 'products';
+         */
+
+        // Get Order Data
+        $order_data = apply_filters('woocommerce_dev_order_data', array(
+            'id' => $order->get_id(),
+            'order_number' => $order->get_order_number(),
+            'order_key' => $order->get_order_key(),
+            'created_at' => WooCommerce_Helper::format_datetime($order->get_date_created() ? $order->get_date_created()->getTimestamp() : 0, false, false), // API gives UTC times.
+            'updated_at' => WooCommerce_Helper::format_datetime($order->get_date_modified() ? $order->get_date_modified()->getTimestamp() : 0, false, false), // API gives UTC times.
+            'completed_at' => WooCommerce_Helper::format_datetime($order->get_date_completed() ? $order->get_date_completed()->getTimestamp() : 0, false, false), // API gives UTC times.
+            'status' => $order->get_status(),
+            'currency' => $order->get_currency(),
+            'total' => wc_format_decimal($order->get_total(), $dp),
+            'subtotal' => wc_format_decimal($order->get_subtotal(), $dp),
+            'total_line_items_quantity' => $order->get_item_count(),
+            'total_tax' => wc_format_decimal($order->get_total_tax(), $dp),
+            'total_shipping' => wc_format_decimal($order->get_shipping_total(), $dp),
+            'cart_tax' => wc_format_decimal($order->get_cart_tax(), $dp),
+            'shipping_tax' => wc_format_decimal($order->get_shipping_tax(), $dp),
+            'total_discount' => wc_format_decimal($order->get_total_discount(), $dp),
+            'shipping_methods' => $order->get_shipping_method(),
+            'payment_details' => array(
+                'method_id' => $order->get_payment_method(),
+                'method_title' => $order->get_payment_method_title(),
+                'paid' => !is_null($order->get_date_paid()),
+            ),
+            'billing_address' => array(
+                'first_name' => $order->get_billing_first_name(),
+                'last_name' => $order->get_billing_last_name(),
+                'company' => $order->get_billing_company(),
+                'address_1' => $order->get_billing_address_1(),
+                'address_2' => $order->get_billing_address_2(),
+                'city' => $order->get_billing_city(),
+                'state' => $order->get_billing_state(),
+                'postcode' => $order->get_billing_postcode(),
+                'country' => $order->get_billing_country(),
+                'email' => $order->get_billing_email(),
+                'phone' => $order->get_billing_phone(),
+            ),
+            'shipping_address' => array(
+                'first_name' => $order->get_shipping_first_name(),
+                'last_name' => $order->get_shipping_last_name(),
+                'company' => $order->get_shipping_company(),
+                'address_1' => $order->get_shipping_address_1(),
+                'address_2' => $order->get_shipping_address_2(),
+                'city' => $order->get_shipping_city(),
+                'state' => $order->get_shipping_state(),
+                'postcode' => $order->get_shipping_postcode(),
+                'country' => $order->get_shipping_country(),
+            ),
+            'note' => $order->get_customer_note(),
+            'customer_ip' => $order->get_customer_ip_address(),
+            'customer_user_agent' => $order->get_customer_user_agent(),
+            'customer_id' => $order->get_user_id(),
+            'view_order_url' => $order->get_view_order_url(),
+            'line_items' => array(),
+            'shipping_lines' => array(),
+            'tax_lines' => array(),
+            'fee_lines' => array(),
+            'coupon_lines' => array(),
+        ));
+
+        // Add line items.
+        foreach ($order->get_items() as $item_id => $item) {
+            $product = $item->get_product();
+            $hideprefix = null;
+            $item_meta = $item->get_formatted_meta_data($hideprefix);
+
+            foreach ($item_meta as $key => $values) {
+                $item_meta[$key]->label = $values->display_key;
+                unset($item_meta[$key]->display_key);
+                unset($item_meta[$key]->display_value);
+            }
+
+            $line_item = array(
+                'id' => $item_id,
+                'subtotal' => wc_format_decimal($order->get_line_subtotal($item, false, false), $dp),
+                'subtotal_tax' => wc_format_decimal($item->get_subtotal_tax(), $dp),
+                'total' => wc_format_decimal($order->get_line_total($item, false, false), $dp),
+                'total_tax' => wc_format_decimal($item->get_total_tax(), $dp),
+                'price' => wc_format_decimal($order->get_item_total($item, false, false), $dp),
+                'quantity' => $item->get_quantity(),
+                'tax_class' => $item->get_tax_class(),
+                'name' => $item->get_name(),
+                'product_id' => $item->get_variation_id() ? $item->get_variation_id() : $item->get_product_id(),
+                'sku' => is_object($product) ? $product->get_sku() : null,
+                'meta' => array_values($item_meta),
+            );
+
+            if (in_array('products', $expand) && is_object($product)) {
+                $_product_data = WooCommerce_Product::get($product->get_id());
+
+                if (isset($_product_data['product'])) {
+                    $line_item['product_data'] = $_product_data['product'];
+                }
+            }
+
+            $order_data['line_items'][] = $line_item;
+        }
+
+        // Add shipping.
+        foreach ($order->get_shipping_methods() as $shipping_item_id => $shipping_item) {
+            $order_data['shipping_lines'][] = array(
+                'id' => $shipping_item_id,
+                'method_id' => $shipping_item->get_method_id(),
+                'method_title' => $shipping_item->get_name(),
+                'total' => wc_format_decimal($shipping_item->get_total(), $dp),
+            );
+        }
+
+        // Add taxes.
+        foreach ($order->get_tax_totals() as $tax_code => $tax) {
+            $tax_line = array(
+                'id' => $tax->id,
+                'rate_id' => $tax->rate_id,
+                'code' => $tax_code,
+                'title' => $tax->label,
+                'total' => wc_format_decimal($tax->amount, $dp),
+                'compound' => (bool)$tax->is_compound,
+            );
+
+            if (in_array('taxes', $expand)) {
+                $_rate_data = WC()->api->WC_API_Taxes->get_tax($tax->rate_id);
+
+                if (isset($_rate_data['tax'])) {
+                    $tax_line['rate_data'] = $_rate_data['tax'];
+                }
+            }
+
+            $order_data['tax_lines'][] = $tax_line;
+        }
+
+        // Add fees.
+        foreach ($order->get_fees() as $fee_item_id => $fee_item) {
+            $order_data['fee_lines'][] = array(
+                'id' => $fee_item_id,
+                'title' => $fee_item->get_name(),
+                'tax_class' => $fee_item->get_tax_class(),
+                'total' => wc_format_decimal($order->get_line_total($fee_item), $dp),
+                'total_tax' => wc_format_decimal($order->get_line_tax($fee_item), $dp),
+            );
+        }
+
+        // Add coupons.
+        foreach ($order->get_items('coupon') as $coupon_item_id => $coupon_item) {
+            $coupon_line = array(
+                'id' => $coupon_item_id,
+                'code' => $coupon_item->get_code(),
+                'amount' => wc_format_decimal($coupon_item->get_discount(), $dp),
+            );
+
+            if (in_array('coupons', $expand)) {
+                $_coupon_data = WC()->api->WC_API_Coupons->get_coupon_by_code($coupon_item->get_code());
+
+                if (!is_wp_error($_coupon_data) && isset($_coupon_data['coupon'])) {
+                    $coupon_line['coupon_data'] = $_coupon_data['coupon'];
+                }
+            }
+
+            $order_data['coupon_lines'][] = $coupon_line;
+        }
+
+        return $order_data;
     }
 
     /**
@@ -69,65 +264,12 @@ class WooCommerce_Order
     }
 
     /**
-     * Get Order Detail By ID
+     * Change Order Status
      *
-     * @see https://stackoverflow.com/questions/39401393/how-to-get-woocommerce-order-details
      * @param $order_id
-     * @param array $arg
-     * @return array
+     * @param $status
+     * @param string $note
      */
-    public static function get($order_id, $arg = array())
-    {
-        // Get an instance of the WC_Order object
-        $order = wc_get_order($order_id);
-
-        // Get the meta data in an unprotected array
-        $order_data = $order->get_data();
-
-        // Order datetime
-        if (!is_null($order->get_date_created())) {
-            $order_data['datetime']['create'] = $order->get_date_created()->format("Y-m-d H:i:s");
-        }
-        if (!is_null($order->get_date_modified())) {
-            $order_data['datetime']['modify'] = $order->get_date_modified()->format("Y-m-d H:i:s");
-        }
-        if (!is_null($order->get_date_paid())) {
-            $order_data['datetime']['paid'] = $order->get_date_paid()->format("Y-m-d H:i:s");
-        }
-        if (!is_null($order->get_date_completed())) {
-            $order_data['datetime']['complete'] = $order->get_date_completed()->format("Y-m-d H:i:s");
-        }
-
-        // Status rendered
-        $order_data['status-rendered'] = esc_html(wc_get_order_status_name($order->get_status()));
-
-        // Get Product Data
-        if (isset($arg['with_product']) and $arg['with_product'] === true) {
-            foreach ($order->get_items() as $item_id => $item) {
-
-                // Get the common data in an array:
-                $item_product_data_array = $item->get_data();
-
-                // Get the special meta data in an array:
-                $item_product_meta_data_array = $item->get_meta_data();
-
-                // Get all additional meta data (formatted in an unprotected array)
-                $formatted_meta_data = $item->get_formatted_meta_data(' ', true);
-
-                // Get Product complete Data
-                $product = wc_get_product($item->get_product_id());
-
-                // Push to List
-                $order_data['products_list'][$item_id] = $item_product_data_array;
-                $order_data['products_list'][$item_id]['post_information'] = $product->get_data();
-                $order_data['products_list'][$item_id]['meta_data'] = $item_product_meta_data_array;
-                $order_data['products_list'][$item_id]['additional_meta_data'] = $formatted_meta_data;
-            }
-        }
-
-        return $order_data;
-    }
-
     public static function change_order_status($order_id, $status, $note = '')
     {
         $order = wc_get_order($order_id);
@@ -136,6 +278,11 @@ class WooCommerce_Order
         $order->update_status($status, $note);
     }
 
+    /**
+     * Delete Order
+     *
+     * @param $order_id
+     */
     public static function delete($order_id)
     {
         wp_delete_post($order_id, true);
@@ -169,11 +316,50 @@ class WooCommerce_Order
         return wc_get_order_statuses();
     }
 
+    /**
+     * Get Order Type List
+     *
+     * @return array
+     */
     public static function get_order_types_list()
     {
         return wc_get_order_types();
     }
 
+    /**
+     * Disable All Email Notification
+     *
+     * @HOOk
+     * @param $email_class
+     */
+    function unhook_those_pesky_emails($email_class)
+    {
+
+        /**
+         * Hooks for sending emails during store events
+         **/
+        remove_action('woocommerce_low_stock_notification', array($email_class, 'low_stock'));
+        remove_action('woocommerce_no_stock_notification', array($email_class, 'no_stock'));
+        remove_action('woocommerce_product_on_backorder_notification', array($email_class, 'backorder'));
+
+        // New order emails
+        remove_action('woocommerce_order_status_pending_to_processing_notification', array($email_class->emails['WC_Email_New_Order'], 'trigger'));
+        remove_action('woocommerce_order_status_pending_to_completed_notification', array($email_class->emails['WC_Email_New_Order'], 'trigger'));
+        remove_action('woocommerce_order_status_pending_to_on-hold_notification', array($email_class->emails['WC_Email_New_Order'], 'trigger'));
+        remove_action('woocommerce_order_status_failed_to_processing_notification', array($email_class->emails['WC_Email_New_Order'], 'trigger'));
+        remove_action('woocommerce_order_status_failed_to_completed_notification', array($email_class->emails['WC_Email_New_Order'], 'trigger'));
+        remove_action('woocommerce_order_status_failed_to_on-hold_notification', array($email_class->emails['WC_Email_New_Order'], 'trigger'));
+
+        // Processing order emails
+        remove_action('woocommerce_order_status_pending_to_processing_notification', array($email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger'));
+        remove_action('woocommerce_order_status_pending_to_on-hold_notification', array($email_class->emails['WC_Email_Customer_Processing_Order'], 'trigger'));
+
+        // Completed order emails
+        remove_action('woocommerce_order_status_completed_notification', array($email_class->emails['WC_Email_Customer_Completed_Order'], 'trigger'));
+
+        // Note emails
+        remove_action('woocommerce_new_customer_note_notification', array($email_class->emails['WC_Email_Customer_Note'], 'trigger'));
+    }
 }
 
 new WooCommerce_Order;

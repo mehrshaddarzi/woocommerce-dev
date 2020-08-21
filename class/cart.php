@@ -16,8 +16,16 @@ class WooCommerce_Cart
 
         // Disable All Message Cart
         // @see https://stackoverflow.com/questions/37126658/hide-added-to-cart-message-in-woocommerce
-        add_filter( 'wc_add_to_cart_message_html', '__return_false' );
+        add_filter('wc_add_to_cart_message_html', '__return_false');
 
+    }
+
+    /**
+     * Clear Cart
+     */
+    public static function clear()
+    {
+        WC()->cart->empty_cart();
     }
 
     /**
@@ -35,17 +43,70 @@ class WooCommerce_Cart
      *
      * @return bool
      */
-    public static function is_empty_cart()
+    public static function is_empty()
     {
         return WC()->cart->is_empty();
     }
 
     /**
-     * Empty Cart complete
+     * Get Cart Detail
+     *
+     * @return mixed|void
      */
-    public static function empty_cart()
+    public static function get()
     {
-        WC()->cart->empty_cart();
+        $cart = array(
+            'cart_contents' => WC()->cart->get_cart(), // Legacy WC()->cart->cart_contents
+            'removed_cart_contents' => WC()->cart->removed_cart_contents,
+            'shipping_methods' => WC()->cart->shipping_methods,
+            'coupon_discount_totals' => WC()->cart->coupon_discount_totals,
+            'coupon_discount_tax_totals' => WC()->cart->coupon_discount_tax_totals,
+            'applied_coupons' => WC()->cart->applied_coupons,
+            'totals' => WC()->cart->totals,
+            'sum' => array(
+                'quantity' => WC()->cart->get_cart_contents_count(),
+                'weight' => WC()->cart->get_cart_contents_weight(),
+                'regular_price' => self::get_total_product_regular_price(),
+                'discount' => self::get_total_product_discount()
+            )
+        );
+
+        return apply_filters('woocommerce_dev_cart_data', $cart);
+    }
+
+    /**
+     * Get Cart Items
+     *
+     * @return array
+     */
+    public static function get_items()
+    {
+        return WC()->cart->get_cart();
+        //foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+        //$_product   = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+        //$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
+        //if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
+        //$cart_item['quantity']
+        //echo wp_kses_post(apply_filters('woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key) . '&nbsp;')
+        // esc_url( wc_get_cart_remove_url( $cart_item_key ) )
+    }
+
+    /**
+     * Calculate Again Cart
+     */
+    public static function calculate()
+    {
+        WC()->cart->calculate_totals();
+    }
+
+    /**
+     * Get Number Item (sum) Product in Cart
+     *
+     * @return int
+     */
+    public static function get_sum_product_quantity_product()
+    {
+        return WC()->cart->get_cart_contents_count();
     }
 
     /**
@@ -128,15 +189,6 @@ class WooCommerce_Cart
         return WC()->cart->get_cart_contents_total();
     }
 
-    /**
-     * Get Number Item (sum) Product in Cart
-     *
-     * @return int
-     */
-    public static function get_number_product_in_cart()
-    {
-        return WC()->cart->get_cart_contents_count();
-    }
 
     /**
      * @see https://github.com/woocommerce/woocommerce/blob/02cf0dfaed5923513de0c88add597d1560c2cfd2/includes/class-wc-cart.php#L1007
@@ -170,7 +222,7 @@ class WooCommerce_Cart
      * Get Product Key By ID in Cart Woocommerce
      *
      * @param $product_id
-     * @return array
+     * @return mixed
      */
     public static function get_product_key_by_id_in_cart($product_id)
     {
@@ -179,7 +231,8 @@ class WooCommerce_Cart
                 return array('quantity' => $cart_item['quantity'], 'key' => $cart_item_key);
             }
         }
-        return array('quantity' => 0, 'key' => false);
+
+        return false;
     }
 
     /**
@@ -194,6 +247,12 @@ class WooCommerce_Cart
         WC()->cart->set_quantity($cart_item_key, $quantity, $refresh_totals);
     }
 
+    /**
+     * check Product Exist in Cart
+     *
+     * @param $product_id
+     * @return bool
+     */
     public static function find_product_in_cart($product_id)
     {
         $product_cart_id = WC()->cart->generate_cart_id($product_id);
@@ -204,28 +263,6 @@ class WooCommerce_Cart
         }
 
         return false;
-    }
-
-    public static function calculate_cart()
-    {
-        WC()->cart->calculate_totals();
-    }
-
-    /**
-     * Get Cart Items
-     *
-     * @return array
-     */
-    public static function get_carts_items()
-    {
-        return WC()->cart->get_cart();
-        //foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-        //$_product   = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
-        //$product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
-        //if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
-        //$cart_item['quantity']
-        //echo wp_kses_post(apply_filters('woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key) . '&nbsp;')
-        // esc_url( wc_get_cart_remove_url( $cart_item_key ) )
     }
 
     /**

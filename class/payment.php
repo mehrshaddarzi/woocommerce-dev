@@ -9,7 +9,9 @@ class WooCommerce_Payment
     {
         // Load List Of Payment for ACF
         add_filter('acf/load_field/key=field_5f33f5144e404', array($this, 'acf_load_gateway_field_choices'));
-        add_filter('acf/load_field/key=field_5f33f58e4e406', array($this, 'acf_load_gateway_field_choices'));
+
+        // Change ICON Gateway
+        // @see https://stackoverflow.com/questions/40723517/add-an-icon-to-custom-woocommerce-payment-gateway
     }
 
     /**
