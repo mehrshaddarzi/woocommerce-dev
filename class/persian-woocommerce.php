@@ -10,13 +10,30 @@ class Persian_WooCommerce
         add_action('admin_menu', array($this, 'remove_submenu_page'), 999);
 
         // Fix Date in Post [WP-ParsiDate]
-        add_action('save_post', array($this, 'fix_post_date'), 99, 3);
+        add_action('save_post', array($this, 'fix_post_date'), 9999999, 3);
 
         // Remove Pay.Ir Gateway
         add_filter('woocommerce_payment_gateways', array($this, 'woo_add_gateway_class'), 999);
 
         // Remove Dashboard Widget
-        add_action('wp_dashboard_setup', array($this, 'remove_dashboard_meta_boxes'), 9999 );
+        add_action('wp_dashboard_setup', array($this, 'remove_dashboard_meta_boxes'), 9999);
+
+        // Fix Time Sale Price
+        add_filter('woocommerce_product_data_tabs', array($this, 'disable_date_i18n'));
+        add_action('woocommerce_product_options_advanced', array($this, 'enable_date_i18n'));
+    }
+
+    public function disable_date_i18n($tab)
+    {
+        remove_filter('date_i18n', 'wpp_fix_i18n', 10);
+        remove_filter('wp_date', 'wpp_fix_i18n', 10);
+        return $tab;
+    }
+
+    public function enable_date_i18n()
+    {
+        add_filter('date_i18n', 'wpp_fix_i18n', 10, 4);
+        add_filter('wp_date', 'wpp_fix_i18n', 10, 4);
     }
 
     /**
@@ -24,7 +41,7 @@ class Persian_WooCommerce
      */
     function remove_dashboard_meta_boxes()
     {
-        remove_meta_box( 'persian_woocommerce_feed', 'dashboard', 'normal' );
+        remove_meta_box('persian_woocommerce_feed', 'dashboard', 'normal');
     }
 
     /**
@@ -66,8 +83,8 @@ class Persian_WooCommerce
         $explode = explode(" ", $post_date);
         $explode_date = explode("-", $explode[0]);
         $current_year = $explode_date[0];
-        $current_jalali_year = date_i18n("Y");
-        if ($current_year == $current_jalali_year) {
+        //$current_jalali_year = date_i18n("Y");
+        if (substr($current_year, 0, 1) == "1") { //Is Jalali Time DatePicker
             // Change Post_date
             $post_date_explode = explode(" ", $post_date);
             $new_post_date = gregdate("Y-m-d", $post_date_explode[0]);

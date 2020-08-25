@@ -43,16 +43,15 @@
   "description": "",
   "short_description": "",
   "reviews_allowed": true,
+  "reviews_count": 0,
   "average_rating": "0.00",
   "rating_count": 0,
   "related_ids": [
     198
   ],
   "upsell_ids": [
-
   ],
   "cross_sell_ids": [
-
   ],
   "parent_id": 0,
   "categories": [
@@ -94,7 +93,6 @@
     }
   ],
   "tags": [
-
   ],
   "images": [
     {
@@ -131,7 +129,6 @@
     }
   ],
   "downloads": [
-
   ],
   "download_limit": -1,
   "download_expiry": -1,
@@ -189,7 +186,6 @@
         }
       ],
       "downloads": [
-
       ],
       "download_limit": -1,
       "download_expiry": -1
@@ -244,17 +240,14 @@
         }
       ],
       "downloads": [
-
       ],
       "download_limit": -1,
       "download_expiry": -1
     }
   ],
   "parent": [
-
   ],
   "grouped_products": [
-
   ],
   "menu_order": 0,
   "thumbnail_id": 203,
@@ -265,6 +258,8 @@
     "price_off": 0,
     "percentage_off": 0
   },
+  "on_sale_from_date": "2020-08-22T19:30:00Z",
+  "on_sale_to_date": "2020-08-26T19:29:59Z",
   "get_min_purchase_quantity": 1,
   "get_max_purchase_quantity": 20,
   "product_type": "محصول متغیر"

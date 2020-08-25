@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce For Developer\n"
-"POT-Creation-Date: 2020-08-19 19:51+0430\n"
-"PO-Revision-Date: 2020-08-19 19:52+0430\n"
+"POT-Creation-Date: 2020-08-24 20:33+0430\n"
+"PO-Revision-Date: 2020-08-24 20:33+0430\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -21,17 +21,17 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: additional/compare/rewrite.php:35
-msgid "Invalid product ID"
-msgstr "شناسه محصول نا معتبر هست"
-
-#: additional/compare/rewrite.php:61
+#: additional/compare/rewrite.php:39
 msgid "This product is in the product comparison list"
-msgstr "این محصول در سبد مقایسه محصولات وجود دارد."
+msgstr "این محصول در لیست مقایسه محصولات وجود دارد"
 
-#: additional/compare/rewrite.php:81
+#: additional/compare/rewrite.php:59
 msgid "This product is not in the product comparison list"
-msgstr "این محصول در سبد مقایسه محصولات وجود ندارد"
+msgstr "این محصول در لیست مقایسه محصولات وجود ندارد"
+
+#: class/product.php:368 class/product.php:369
+msgid "Placeholder"
+msgstr ""
 
 #: gateway/payir-json.php:26
 msgid "پی آی آر"
@@ -61,16 +61,36 @@ msgstr "توضیحات"
 msgid "This controls the description which the user sees during checkout."
 msgstr ""
 
-#: woocommerce-dev.php:234
+#: hook/acf.php:20
+msgid "Other"
+msgstr ""
+
+#: rewrite/rewrite.php:40
+msgid "Invalid product ID"
+msgstr "شناسه محصول نامعتبر هست"
+
+#: rewrite/rewrite.php:79
+msgid "The stock of this product in stock is less than your request."
+msgstr "موجودی انبار این محصول کم تر از میزان درخواستی شما هست."
+
+#: rewrite/rewrite.php:94
+msgid "This is not a variable product."
+msgstr "این یک محصول متغیر نیست."
+
+#: rewrite/rewrite.php:100
+msgid "The product ID of the variable is invalid."
+msgstr "شناسه محصول متغیر نامعتبر می باشد."
+
+#: woocommerce-dev.php:236
 msgid "Your installed PHP Version is:"
 msgstr "حداقل ورژن PHP برای نصب این افزونه:"
 
-#: woocommerce-dev.php:235
+#: woocommerce-dev.php:237
 msgid ""
 "The <strong>WooCommerce Dev</strong> plugin requires PHP version <strong>"
 msgstr ""
 
-#: woocommerce-dev.php:235
+#: woocommerce-dev.php:237
 msgid "</strong> or greater."
 msgstr ""
 

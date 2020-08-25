@@ -22,6 +22,12 @@ class WooCommerce_Yith_Compare
 
         // Remove all Front File
         add_action('wp_enqueue_scripts', array($this, 'remove_asset'), 9999);
+        add_action('wp_print_styles', array($this, 'remove_inline_css'), 9999);
+    }
+
+    public function remove_inline_css()
+    {
+        wp_styles()->add_data( 'font-awesome', 'after', '' );
     }
 
     public function remove_asset()
@@ -156,6 +162,8 @@ class WooCommerce_Yith_Compare
             // Add yo List
             $ids[] = $product_id;
         }
+
+        return $ids;
     }
 
     /**

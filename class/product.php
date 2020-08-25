@@ -7,9 +7,11 @@ class WooCommerce_Product
 
     public function __construct()
     {
-
         // Add Custom field To Product Data
         add_filter('woocommerce_dev_product_data', array($this, 'filter_product_data'), 10, 2);
+
+        // Add Custom Query Params
+        add_filter('woocommerce_product_data_store_cpt_get_products_query', array($this, 'handle_custom_query_var'), 10, 2);
     }
 
     /**
@@ -33,12 +35,20 @@ class WooCommerce_Product
         remove_filter("option_woocommerce_weight_unit", array('\WooCommerce_Dev\WooCommerce_Helper', 'set_localize_option'));
 
         // Discount
-        $data['discount']['is_on_sale'] = $product->is_on_sale();
+        $data['discount']['on_sale'] = $product->is_on_sale();
         $data['discount']['price_off'] = 0;
         $data['discount']['percentage_off'] = 0;
         if ($product->is_on_sale() === true and !empty($product->get_sale_price())) {
             $data['discount']['percentage_off'] = round((($product->get_regular_price() - $product->get_sale_price()) / $product->get_regular_price()) * 100);
             $data['discount']['price_off'] = $product->get_regular_price() - $product->get_sale_price();
+        }
+
+        // On sale From Date
+        $data['on_sale_from_date'] = '';
+        $data['on_sale_to_date'] = '';
+        if ($product->is_on_sale()) {
+            $data['on_sale_from_date'] = WooCommerce_Helper::format_datetime($product->get_date_on_sale_from(), false, true);
+            $data['on_sale_to_date'] = WooCommerce_Helper::format_datetime($product->get_date_on_sale_to(), false, true);
         }
 
         // Stock
@@ -48,10 +58,44 @@ class WooCommerce_Product
         // Fix Price Html
         $data['price_html'] = strip_tags($data['price_html']);
 
+        // Get Review Count
+        $data['reviews_count'] = $product->get_review_count();
+
         // Product Type Name
         $product_types = self::get_product_types();
         if (isset($product_types[$data['type']])) {
             $data['product_type'] = $product_types[$data['type']];
+        }
+
+        // Add attribute term_id
+        if (!empty($data['attributes'])) {
+            foreach ($data['attributes'] as $attr_key => $attr) {
+                $term_slug = wc_attribute_taxonomy_name($attr['slug']);
+                $attr['terms'] = array();
+                foreach ($attr['options'] as $option) {
+                    $term = get_term_by('name', $option, $term_slug, 'ARRAY_A');
+                    $attr['terms'][$term['term_id']] = $term;
+                }
+                $data['attributes'][$attr_key] = $attr;
+            }
+        }
+
+        // Get Variation Prices
+        // https://stackoverflow.com/questions/55932785/how-can-i-get-min-and-max-price-of-a-woocommerce-variable-product-in-custom-loop
+        if ($product->is_type('variable') && $product->has_child()) {
+            $data['variations_prices'] = array(
+                'min' => array(
+                    'regular_price' => $product->get_variation_regular_price(),
+                    'sale_price' => $product->get_variation_sale_price(),
+                    'sale' => $product->get_variation_price(),
+                ),
+                'max' => array(
+                    'regular_price' => $product->get_variation_regular_price('max'),
+                    'sale_price' => $product->get_variation_sale_price('max'),
+                    'sale' => $product->get_variation_price('max'),
+                ),
+                'prices' => $product->get_variation_prices()
+            );
         }
 
         return $data;
@@ -427,6 +471,84 @@ class WooCommerce_Product
     }
 
     /**
+     * Get List Variation IDS
+     *
+     * @param $product | This Object come from Product::get($product_id)
+     * @return array
+     */
+    public static function get_variation_ids($product)
+    {
+        $ids = array();
+        if (isset($product['variations']) and !empty($product['variations'])) {
+            foreach ($product['variations'] as $item) {
+                $ids[] = $item['id'];
+            }
+        }
+
+        return $ids;
+    }
+
+    /**
+     * Get List Of array Attribute for Create Select Box
+     *
+     * @param $product | This Object come from Product::get($product_id)
+     * @return array
+     */
+    public static function get_attribution_product_fields($product)
+    {
+        $list = array();
+        if ($product['type'] == "variable" and count($product['variations']) > 0) {
+            foreach ($product['attributes'] as $attribute) {
+                $list[wc_attribute_taxonomy_name($attribute['slug'])] = array(
+                    'name' => $attribute['name'],
+                    'options' => array()
+                );
+                $options = array();
+                foreach ($attribute['terms'] as $term_key => $term) {
+
+                    // Check Term in Variables Product
+                    $exist = false;
+                    foreach ($product['variations'] as $variations_product) {
+                        $in_stock = $variations_product['in_stock'];
+                        $stock_quantity = $variations_product['stock_quantity'];
+                        if ($in_stock === true) {
+                            foreach ($variations_product['attributes'] as $variations_product_attribute) {
+                                if ($term['slug'] == $variations_product_attribute['option']) {
+                                    $exist = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if ($exist === true) {
+                        $options[$term['slug']] = $term['name'];
+                    }
+                }
+                $list[wc_attribute_taxonomy_name($attribute['slug'])]['options'] = $options;
+            }
+        }
+
+        /**
+         * [pa_color] => Array
+         * (
+         * [name] => رنگ
+         * [options] => Array
+         * (
+         * [blue] => آبی
+         * [red] => قرمز
+         * )
+         * )
+         * [pa_size] => Array
+         * (
+         * [name] => سایز
+         * [options] => Array
+         * (
+         * [l] => L
+         */
+        return $list;
+    }
+
+    /**
      * Get Product Gallery Images
      *
      * @param $product_id
@@ -466,6 +588,7 @@ class WooCommerce_Product
      * Get Products List
      *
      * @see https://github.com/woocommerce/woocommerce/wiki/wc_get_products-and-WC_Product_Query
+     * @see WC_Product_Data_Store_CPT Class | get_wp_query_args( $query_vars ) Method For Convert to WP_Query
      * @param array $arg
      * @return array|\stdClass
      */
@@ -473,13 +596,79 @@ class WooCommerce_Product
     {
         $default = array(
             //'limit' => 10,
-            'orderby' => 'date',
+            'orderby' => 'none',
             'order' => 'DESC',
             'return' => 'ids',
             'stock_status' => 'instock',
         );
-        $args = wp_parse_args($default, $arg);
+        $args = wp_parse_args($arg, $default);
         return wc_get_products($args);
+    }
+
+    /**
+     * Add Product Query Params
+     *
+     * @Hook
+     * @param $query
+     * @param $query_vars
+     * @return mixed
+     */
+    function handle_custom_query_var($query, $query_vars)
+    {
+        // Add Category IDS
+        if (!empty($query_vars['category_ids'])) {
+            $query['tax_query'][] = array(
+                'taxonomy' => 'product_cat',
+                'field' => 'term_id',
+                'terms' => $query_vars['category_ids'],
+                'operator' => 'IN'
+            );
+        }
+
+        // Add Tag IDS
+        if (!empty($query_vars['tag_ids'])) {
+            $query['tax_query'][] = array(
+                'taxonomy' => 'product_tag',
+                'field' => 'term_id',
+                'terms' => $query_vars['category_ids'],
+                'operator' => 'IN'
+            );
+        }
+
+        // Custom Order By
+        if (!empty($query_vars['order-by'])) {
+            // Disable WooCommerce OrderBy
+            $query['orderby'] = 'none';
+
+            // Add Custom order-by
+            $order_by = trim($query_vars['order-by']);
+            switch ($order_by) {
+                case "views":
+                    $query['orderby'] = 'meta_value_num';
+                    $query['meta_key'] = 'views';
+                    break;
+                case "comment_count":
+                    $query['orderby'] = 'comment_count';
+                    break;
+                case "price":
+                    $query['orderby'] = 'meta_value_num';
+                    $query['meta_key'] = '_price';
+                    break;
+                case "total_sales":
+                    $query['orderby'] = 'meta_value_num';
+                    $query['meta_key'] = 'total_sales';
+                    break;
+                case "rating":
+                    $query['orderby'] = 'meta_value_num';
+                    $query['meta_key'] = '_wc_average_rating';
+                    break;
+            }
+        }
+
+//        echo '<pre>';
+//        print_r($query);
+//        exit;
+        return $query;
     }
 
     /**
@@ -510,6 +699,7 @@ class WooCommerce_Product
      * @param string $post_status
      * @param string $post_type
      * @return bool
+     * @see https://stackoverflow.com/questions/53958871/woocommerce-get-product-variation-id-from-matching-attributes
      */
     public static function exist($product_id, $post_status = 'publish', $post_type = 'product')
     {
@@ -517,6 +707,166 @@ class WooCommerce_Product
         $query = $wpdb->get_var("SELECT count(*) FROM `$wpdb->posts` WHERE `ID` = $product_id AND `post_type` = '$post_type' AND `post_status` = '$post_status'");
         return (int)$query > 0;
     }
+
+    /**
+     * Get Product Attribute List
+     *
+     * @param array $arg
+     * @return array
+     */
+    public static function get_product_attributes($arg = array())
+    {
+        $default = array(
+            'children' => false,
+            'slug' => false,
+            'id' => false,
+            'terms_query' => array(
+                'hide_empty' => false
+            )
+        );
+        $args = wp_parse_args($arg, $default);
+
+        $product_attributes = array();
+        $attribute_taxonomies = wc_get_attribute_taxonomies();
+
+        foreach ($attribute_taxonomies as $attribute) {
+            $array = array(
+                'id' => intval($attribute->attribute_id),
+                'name' => $attribute->attribute_label,
+                'slug' => wc_attribute_taxonomy_name($attribute->attribute_name),
+                'type' => $attribute->attribute_type,
+                'order_by' => $attribute->attribute_orderby,
+                'has_archives' => (bool)$attribute->attribute_public,
+            );
+
+            if ($args['children']) {
+                // Get Terms
+                $terms_default_query = array(
+                    'taxonomy' => wc_attribute_taxonomy_name($attribute->attribute_name)
+                );
+                $terms = get_terms(wp_parse_args($args['terms_query'], $terms_default_query));
+                $array['children'] = WooCommerce_Helper::object_to_array($terms);
+            }
+
+            // Push To List
+            $product_attributes[wc_sanitize_taxonomy_name($attribute->attribute_name)] = $array;
+        }
+
+        // Get By Slug
+        if ($args['slug'] != false) {
+            if (isset($product_attributes[$args['slug']])) {
+                return $product_attributes[$args['slug']];
+            } else {
+                return array();
+            }
+        }
+
+        // Get By ID
+        if ($args['id'] != false) {
+            foreach ($product_attributes as $attribute) {
+                if ($attribute['id'] == $args['id']) {
+                    return $attribute;
+                }
+            }
+
+            return array();
+        }
+
+        return $product_attributes;
+    }
+
+    /**
+     * Get Attribute Terms in Woocommerce
+     *
+     * @param $attribute_id
+     * @param array $arg
+     * @return array
+     */
+    public static function get_product_attribute_terms($attribute_id, $arg = array())
+    {
+        // prepare arg
+        $default = array(
+            'hide_empty' => false
+        );
+        $args = wp_parse_args($arg, $default);
+
+        /**
+         * Get By Order in Admin Panel:
+         *
+         * 'orderby' => 'meta_value_num',
+         * 'order' => 'ASC',
+         * 'hierarchical' => false,
+         * 'meta_query' => array(array(
+         * 'key' => 'order',
+         * 'type' => 'NUMERIC',
+         * ))
+         */
+
+        $attribute_id = absint($attribute_id);
+        $taxonomy = wc_attribute_taxonomy_name_by_id($attribute_id);
+        $terms = get_terms($taxonomy, $args);
+        return WooCommerce_Helper::object_to_array($terms);
+    }
+
+    /**
+     * Find matching product variation id
+     *
+     * @param $product_id
+     * @param $attributes
+     * @return mixed
+     * @throws \Exception
+     */
+    public static function find_matching_product_variation_id($product_id, $attributes)
+    {
+        $attribute_array = array();
+        foreach ($attributes as $key => $value) {
+            $attribute_array['attribute_' . wc_attribute_taxonomy_name($key)] = $value;
+        }
+
+        $data_store = \WC_Data_Store::load('product');
+        $variation_id = $data_store->find_matching_product_variation(
+            new \WC_Product($product_id),
+            $attribute_array
+        );
+
+        if (empty($variation_id)) {
+            return false;
+        }
+
+        // You Can get all attributes from product
+        // $variation_data = wc_get_product_variation_attributes( $variation_id );
+
+        return $variation_id;
+    }
+
+    /**
+     * Get Product IDS
+     *
+     * @param string $type
+     * @return array|int[]|\WP_Post[]
+     */
+    public static function get_product_ids($type = 'on-sale')
+    {
+        switch ($type) {
+            case "on-sale":
+                return wc_get_product_ids_on_sale();
+                break;
+            case "featured":
+                return wc_get_featured_product_ids();
+                break;
+            case "all":
+                return get_posts(array(
+                    'post_type' => 'product',
+                    'numberposts' => -1,
+                    'post_status' => 'publish',
+                    'fields' => 'ids',
+                ));
+                break;
+        }
+
+        return array();
+    }
+
 }
 
 new WooCommerce_Product;

@@ -67,7 +67,8 @@ class WooCommerce_Cart
                 'quantity' => WC()->cart->get_cart_contents_count(),
                 'weight' => WC()->cart->get_cart_contents_weight(),
                 'regular_price' => self::get_total_product_regular_price(),
-                'discount' => self::get_total_product_discount()
+                'discount' => self::get_total_product_discount(),
+                'subtotal' => WC()->cart->get_subtotal()
             )
         );
 
@@ -88,6 +89,8 @@ class WooCommerce_Cart
         //if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
         //$cart_item['quantity']
         //echo wp_kses_post(apply_filters('woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key) . '&nbsp;')
+        //apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key )
+        //apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key )
         // esc_url( wc_get_cart_remove_url( $cart_item_key ) )
     }
 
@@ -138,6 +141,46 @@ class WooCommerce_Cart
     public static function get_sub_total()
     {
         return WC()->cart->subtotal;
+    }
+
+    /**
+     * Get Shipping Total
+     *
+     * @return bool|int|mixed|string|\WC_Tax
+     */
+    public static function get_shipping_total()
+    {
+        return WC()->cart->shipping_total;
+    }
+
+    /**
+     * Cart Need Shipping
+     *
+     * @return bool
+     */
+    public static function cart_need_shipping()
+    {
+        return (WC()->cart->needs_shipping() && WC()->cart->show_shipping());
+    }
+
+    /**
+     * Enable Tax
+     *
+     * @return bool
+     */
+    public static function enable_tax()
+    {
+        return wc_prices_include_tax();
+    }
+
+    /**
+     * Get Sum Total Tax
+     *
+     * @return bool|int|mixed|string|\WC_Tax
+     */
+    public static function get_total_tax()
+    {
+        return WC()->cart->cart_contents_tax;
     }
 
     /**

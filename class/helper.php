@@ -38,6 +38,10 @@ class WooCommerce_Helper
             'dimension_unit_localize' => __(get_option('woocommerce_dimension_unit'), 'woocommerce'),
             'ssl_enabled' => ('yes' === get_option('woocommerce_force_ssl_checkout')),
             'permalinks_enabled' => ('' !== get_option('permalink_structure')),
+            'currency_pos' => get_option('woocommerce_currency_pos'),
+            'price_decimal_sep' => get_option('woocommerce_price_decimal_sep'),
+            'price_num_decimals' => get_option('woocommerce_price_num_decimals'),
+            'price_thousand_sep' => get_option('woocommerce_price_thousand_sep')
         );
 
         if (empty($key)) {
@@ -117,6 +121,43 @@ class WooCommerce_Helper
             $type = "myaccount";
         }
         return wc_get_page_permalink($type);
+    }
+
+    /**
+     * Get Page From Account Url
+     *
+     * @param string $type
+     * @return string
+     *
+     * -- Default list --
+     * dashboard
+     * orders
+     * downloads
+     * edit-address
+     * edit-account
+     * customer-logout
+     */
+    public static function get_page_account_url($type = 'view-order')
+    {
+        return wc_get_account_endpoint_url('customer-logout');
+    }
+
+    /**
+     * Get Navigation Account List Menu
+     */
+    public static function get_navigation_account()
+    {
+        $list = array();
+        foreach (wc_get_account_menu_items() as $endpoint => $label) {
+            $list[] = array(
+                'class' => wc_get_account_menu_item_classes($endpoint),
+                'url' => esc_url(wc_get_account_endpoint_url($endpoint)),
+                'endpoint' => $endpoint,
+                'label' => esc_html($label)
+            );
+        }
+
+        return $list;
     }
 
     /**
