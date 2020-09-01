@@ -4,6 +4,8 @@ namespace WooCommerce_Dev;
 
 class WooCommerce_Product
 {
+    public static $cache_key = 'wc_dev_product';
+    public static $enable_cache = true;
 
     public function __construct()
     {
@@ -12,6 +14,13 @@ class WooCommerce_Product
 
         // Add Custom Query Params
         add_filter('woocommerce_product_data_store_cpt_get_products_query', array($this, 'handle_custom_query_var'), 10, 2);
+
+        // Clear Cache Product After Update
+        if (self::$enable_cache) {
+            add_action('woocommerce_update_product', array($this, 'remove_cache_after_update_product'), 10, 2);
+            add_action('woocommerce_delete_product', array($this, 'remove_cache_after_delete_product'));
+            add_action('woocommerce_delete_product_variation', array($this, 'remove_cache_after_delete_product'));
+        }
     }
 
     /**
@@ -122,6 +131,14 @@ class WooCommerce_Product
     public static function get($product_id)
     {
 
+        // Check Cache system
+        if (self::$enable_cache) {
+            $data = wp_cache_get($product_id, self::$cache_key);
+            if ($data != false) {
+                return $data;
+            }
+        }
+
         // Get Data
         $product = wc_get_product($product_id);
 
@@ -153,6 +170,11 @@ class WooCommerce_Product
         }
 
         // Result
+        if (self::$enable_cache) {
+            wp_cache_set($product_id, $product_data, self::$cache_key);
+        }
+
+        // Return Data
         return $product_data;
     }
 
@@ -211,7 +233,7 @@ class WooCommerce_Product
             'reviews_allowed' => $product->get_reviews_allowed(),
             'average_rating' => wc_format_decimal($product->get_average_rating(), 2),
             'rating_count' => $product->get_rating_count(),
-            'related_ids' => array_map('absint', array_values(wc_get_related_products($product->get_id()))),
+            'related_ids' => array_map('absint', array_values(wc_get_related_products($product->get_id(), apply_filters('woocommerce_dev_number_related_product', 10)))),
             'upsell_ids' => array_map('absint', $product->get_upsell_ids()),
             'cross_sell_ids' => array_map('absint', $product->get_cross_sell_ids()),
             'parent_id' => $product->get_parent_id(),
@@ -499,6 +521,13 @@ class WooCommerce_Product
         $list = array();
         if ($product['type'] == "variable" and count($product['variations']) > 0) {
             foreach ($product['attributes'] as $attribute) {
+
+                // If Attribute Not User For Variation
+                if ($attribute['variation'] === false) {
+                    continue;
+                }
+
+                // Get Basic Detail
                 $list[wc_attribute_taxonomy_name($attribute['slug'])] = array(
                     'name' => $attribute['name'],
                     'options' => array()
@@ -630,7 +659,7 @@ class WooCommerce_Product
             $query['tax_query'][] = array(
                 'taxonomy' => 'product_tag',
                 'field' => 'term_id',
-                'terms' => $query_vars['category_ids'],
+                'terms' => $query_vars['tag_ids'],
                 'operator' => 'IN'
             );
         }
@@ -865,6 +894,29 @@ class WooCommerce_Product
         }
 
         return array();
+    }
+
+    /**
+     * Remove Cache After Product Deleted
+     *
+     * @Hook
+     * @param $product_id
+     */
+    public function remove_cache_after_delete_product($product_id)
+    {
+        wp_cache_delete($product_id, self::$cache_key);
+    }
+
+    /**
+     * Remove Cache After Update Product
+     *
+     * @Hook
+     * @param $product_id
+     * @param $product
+     */
+    public function remove_cache_after_update_product($product_id, $product)
+    {
+        wp_cache_delete($product_id, self::$cache_key);
     }
 
 }

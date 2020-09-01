@@ -6,7 +6,7 @@ namespace WooCommerce_Dev;
  * @Require:
  * 1) Advance Custom Field Pro
  * 2) https://github.com/mehrshaddarzi/acf-unique-id-field
- * 3)  Persian WooCommerce
+ * 3) Persian WooCommerce
  */
 class WooCommerce_User_Multiple_Shipping
 {

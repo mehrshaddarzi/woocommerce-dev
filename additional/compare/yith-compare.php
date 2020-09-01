@@ -23,6 +23,29 @@ class WooCommerce_Yith_Compare
         // Remove all Front File
         add_action('wp_enqueue_scripts', array($this, 'remove_asset'), 9999);
         add_action('wp_print_styles', array($this, 'remove_inline_css'), 9999);
+
+        // Remove Dashboard Widget
+        add_action('wp_dashboard_setup', array($this, 'remove_dashboard_meta_boxes'), 9999);
+
+        // Remove Menu Admin
+        add_action('admin_init', array($this, 'remove_menu'), 999);
+    }
+
+    /**
+     * Remove Menu
+     */
+    public function remove_menu()
+    {
+        remove_menu_page('yith_plugin_panel');
+    }
+
+    /**
+     * Remove Widget Dashboard
+     */
+    function remove_dashboard_meta_boxes()
+    {
+        remove_meta_box('yith_dashboard_products_news', 'dashboard', 'normal');
+        remove_meta_box('yith_dashboard_blog_news', 'dashboard', 'normal');
     }
 
     public function remove_inline_css()
@@ -174,7 +197,8 @@ class WooCommerce_Yith_Compare
      */
     public static function get_default_compare_fields($with_attr = true)
     {
-        return \YITH_Woocompare_Helper::standard_fields();
+        //@TODO Create Standard Again For REST API and Check product attribute if not all in Product compare list
+        return \YITH_Woocompare_Helper::standard_fields($with_attr);
         // use apply_filters( 'yith_woocompare_standard_fields_array', $fields ); for adding Item
     }
 

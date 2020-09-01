@@ -1,0 +1,305 @@
+Array
+(
+    [flat_rate] => WC_Shipping_Flat_Rate Object
+        (
+            [fee_cost:protected] =>
+            [supports] => Array
+                (
+                    [0] => shipping-zones
+                    [1] => instance-settings
+                    [2] => instance-settings-modal
+                )
+
+            [id] => flat_rate
+            [method_title] => نرخ ثابت
+            [method_description] => به شما اجازه می دهد یک نرخ ثابت برای ارسال ، شارژ کنید .
+            [enabled] => yes
+            [title] =>
+            [rates] => Array
+                (
+                )
+
+            [tax_status] =>
+            [fee] =>
+            [minimum_fee] =>
+            [instance_id] => 0
+            [instance_form_fields] => Array
+                (
+                    [title] => Array
+                        (
+                            [title] => عنوان روش
+                            [type] => text
+                            [description] => متن نمایشی هنگام پرداخت صورتحساب.
+                            [default] => نرخ ثابت
+                            [desc_tip] => 1
+                        )
+
+                    [tax_status] => Array
+                        (
+                            [title] => وضعیت مالیات
+                            [type] => select
+                            [class] => wc-enhanced-select
+                            [default] => taxable
+                            [options] => Array
+                                (
+                                    [taxable] => مشمول مالیات
+                                    [none] => هیچ کدام
+                                )
+
+                        )
+
+                    [cost] => Array
+                        (
+                            [title] => هزینه
+                            [type] => text
+                            [placeholder] =>
+                            [description] => وارد کردن مبلغ (بدون مالیات) یا میانگین، مثال:  10.00 * [تعداد].
+
+بکار بردن[qty] برای تعداد موجودی،
+[cost] برای جمع هزینه محصولات، و [fee percent="10" min_fee="20" max_fee=""] برای درصد هزینه است.
+                            [default] => 0
+                            [desc_tip] => 1
+                            [sanitize_callback] => Array
+                                (
+                                    [0] => WC_Shipping_Flat_Rate Object
+ *RECURSION*
+                                    [1] => sanitize_cost
+                                )
+
+                        )
+
+                )
+
+            [instance_settings] => Array
+                (
+                )
+
+            [availability] =>
+            [countries] => Array
+                (
+                )
+
+            [plugin_id] => woocommerce_
+            [errors] => Array
+                (
+                )
+
+            [settings] => Array
+                (
+                    [title] =>
+                    [tax_status] =>
+                    [cost] =>
+                    [type] => class
+                )
+
+            [form_fields] => Array
+                (
+                )
+
+            [data:protected] => Array
+                (
+                )
+
+            [cost] =>
+            [type] => class
+        )
+
+    [free_shipping] => WC_Shipping_Free_Shipping Object
+        (
+            [min_amount] => 0
+            [requires] =>
+            [supports] => Array
+                (
+                    [0] => shipping-zones
+                    [1] => instance-settings
+                    [2] => instance-settings-modal
+                )
+
+            [id] => free_shipping
+            [method_title] => حمل و نقل رایگان
+            [method_description] => حمل و نقل رایگان یک روش ویژه در هنگامی است که استفاده با کوپن ها و حداقل صرف کردن راه اندازی می شود.
+            [enabled] => yes
+            [title] =>
+            [rates] => Array
+                (
+                )
+
+            [tax_status] => taxable
+            [fee] =>
+            [minimum_fee] =>
+            [instance_id] => 0
+            [instance_form_fields] => Array
+                (
+                    [title] => Array
+                        (
+                            [title] => عنوان
+                            [type] => text
+                            [description] => متن نمایشی هنگام پرداخت صورتحساب.
+                            [default] => حمل و نقل رایگان
+                            [desc_tip] => 1
+                        )
+
+                    [requires] => Array
+                        (
+                            [title] => نیازمند حمل و نقل رایگان ...
+                            [type] => select
+                            [class] => wc-enhanced-select
+                            [default] =>
+                            [options] => Array
+                                (
+                                    [] => نامعلوم
+                                    [coupon] => کوپن حمل و نقل رایگان
+                                    [min_amount] => کمترین میزان مبلغ سفارش
+                                    [either] => کمترین میزان خرید یا کوپن
+                                    [both] => کمترین میزان خرید و کوپن
+                                )
+
+                        )
+
+                    [min_amount] => Array
+                        (
+                            [title] => حداقل مبلغ سفارش
+                            [type] => price
+                            [placeholder] => 0
+                            [description] => کاربران ملزم به هزینه کردن این مقدار هستند تا حمل و نقل رایگان بدست بیاورند (اگر فعال کنید)
+                            [default] => 0
+                            [desc_tip] => 1
+                        )
+
+                    [ignore_discounts] => Array
+                        (
+                            [title] => Coupons discounts
+                            [label] => Apply minimum order rule before coupon discount
+                            [type] => checkbox
+                            [description] => If checked, free shipping would be available based on pre-discount order amount.
+                            [default] => no
+                            [desc_tip] => 1
+                        )
+
+                )
+
+            [instance_settings] => Array
+                (
+                )
+
+            [availability] =>
+            [countries] => Array
+                (
+                )
+
+            [plugin_id] => woocommerce_
+            [errors] => Array
+                (
+                )
+
+            [settings] => Array
+                (
+                    [title] =>
+                    [min_amount] => 0
+                    [requires] =>
+                    [ignore_discounts] =>
+                )
+
+            [form_fields] => Array
+                (
+                )
+
+            [data:protected] => Array
+                (
+                )
+
+            [ignore_discounts] =>
+        )
+
+    [local_pickup] => WC_Shipping_Local_Pickup Object
+        (
+            [supports] => Array
+                (
+                    [0] => shipping-zones
+                    [1] => instance-settings
+                    [2] => instance-settings-modal
+                )
+
+            [id] => local_pickup
+            [method_title] => تحویل محلی
+            [method_description] => اجازه به مشتریان برای دریافت سفارشات توسط خودشان. به صورت پیشفرض ، هنگامی که تحویل محلی فروشگاه فعال باشد مالیات پایه بدون در نظر گرفتن آدرس مشتری اعمال می شود.
+            [enabled] => yes
+            [title] =>
+            [rates] => Array
+                (
+                )
+
+            [tax_status] =>
+            [fee] =>
+            [minimum_fee] =>
+            [instance_id] => 0
+            [instance_form_fields] => Array
+                (
+                    [title] => Array
+                        (
+                            [title] => عنوان
+                            [type] => text
+                            [description] => متن نمایشی هنگام پرداخت صورتحساب.
+                            [default] => تحویل محلی
+                            [desc_tip] => 1
+                        )
+
+                    [tax_status] => Array
+                        (
+                            [title] => وضعیت مالیات
+                            [type] => select
+                            [class] => wc-enhanced-select
+                            [default] => taxable
+                            [options] => Array
+                                (
+                                    [taxable] => مشمول مالیات
+                                    [none] => هیچ کدام
+                                )
+
+                        )
+
+                    [cost] => Array
+                        (
+                            [title] => هزینه
+                            [type] => text
+                            [placeholder] => 0
+                            [description] => برای تحویل محلی هزینه دلخواه است.
+                            [default] =>
+                            [desc_tip] => 1
+                        )
+
+                )
+
+            [instance_settings] => Array
+                (
+                )
+
+            [availability] =>
+            [countries] => Array
+                (
+                )
+
+            [plugin_id] => woocommerce_
+            [errors] => Array
+                (
+                )
+
+            [settings] => Array
+                (
+                    [title] =>
+                    [tax_status] =>
+                    [cost] =>
+                )
+
+            [form_fields] => Array
+                (
+                )
+
+            [data:protected] => Array
+                (
+                )
+
+            [cost] =>
+        )
+
+)

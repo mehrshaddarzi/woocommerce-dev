@@ -96,6 +96,26 @@ jQuery(document).ready(function ($) {
                 'variations_data': variations_data,
                 'variations_list': variations_list
             });
+        },
+        wc_add_reviews: function($tag = false) {
+
+            // arg
+            let arg = {
+                'product_id': 0,
+                'comment_parent_id': 0,
+                'comment_email': '',
+                'comment_author': '',
+                'comment_rating': '',
+                'comment_content': '',
+            };
+
+            // extra parameters
+            if ($tag !== false) {
+                arg = $.extend(arg, window.rewrite_api_method.get_form_inputs($tag));
+            }
+
+            // Send Data
+            window.rewrite_api_method.request('wc/review_add', 'POST', arg, $tag);
         }
     };
 

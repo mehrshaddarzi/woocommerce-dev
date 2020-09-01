@@ -10,7 +10,7 @@ jQuery(document).ready(function ($) {
                 'product-id': $product_id
             }, $tag);
         },
-        wc_remove_product_to_compare: function ($tag = false, $product_id = 0) {
+        wc_remove_product_from_compare: function ($tag = false, $product_id = 0) {
             // Sanitize Params
             if ($tag !== false) {
                 $product_id = $tag.attr('data-product-id');

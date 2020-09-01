@@ -17,14 +17,14 @@ class wc_compare
         wp_enqueue_script('woocommerce-compare-rewrite', \WOOCOMMERCE_DEV::$plugin_url . '/additional/compare/script.js', array('jquery', 'wp-rewrite-api'), \WOOCOMMERCE_DEV::$plugin_version, true);
     }
 
-    public static function _return_list()
+    public static function _return_list($type = 'get')
     {
         $list = WooCommerce_Yith_Compare::get_list_products_compare();
         return apply_filters('woocommerce_dev_compare_list_return', array(
             'html' => '',
             'ids' => $list,
             'count' => count($list),
-        ));
+        ), $type);
     }
 
     public static function add()
@@ -44,7 +44,7 @@ class wc_compare
         WooCommerce_Yith_Compare::add_product_to_compare($product_id);
 
         // Result
-        wp_send_json_success(self::_return_list(), 200);
+        wp_send_json_success(self::_return_list('add'), 200);
     }
 
     public static function remove()
@@ -64,12 +64,12 @@ class wc_compare
         WooCommerce_Yith_Compare::remove_product_from_compare($product_id);
 
         // Result
-        wp_send_json_success(self::_return_list(), 200);
+        wp_send_json_success(self::_return_list('remove'), 200);
     }
 
     public static function get()
     {
-        wp_send_json_success(self::_return_list(), 200);
+        wp_send_json_success(self::_return_list('get'), 200);
     }
 
     public static function clear()
@@ -78,7 +78,7 @@ class wc_compare
         WooCommerce_Yith_Compare::clear_compare_list();
 
         // Return
-        wp_send_json_success(self::_return_list(), 200);
+        wp_send_json_success(self::_return_list('clear'), 200);
     }
 }
 

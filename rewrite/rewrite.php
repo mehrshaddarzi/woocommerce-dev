@@ -5,6 +5,7 @@ namespace WordPress_Rewrite_API_Request;
 use WooCommerce_Dev\WooCommerce_Cart;
 use WooCommerce_Dev\WooCommerce_Helper;
 use WooCommerce_Dev\WooCommerce_Product;
+use WooCommerce_Dev\WooCommerce_Review;
 
 class wc
 {
@@ -169,6 +170,78 @@ class wc
     /**
      * CheckOut System
      */
+
+
+    /**
+     * Reviews
+     */
+    public static function review_add()
+    {
+        // Require Params
+        if (!isset($_REQUEST['product_id']) || !isset($_REQUEST['comment_content']) || !isset($_REQUEST['comment_author'])) {
+            WordPress_Rewrite_API_Request::missing_params();
+        }
+
+        // Prepare Params
+        $product_id = $_REQUEST['product_id'];
+        $comment_parent_id = $_REQUEST['comment_parent_id'];
+        if (empty($comment_parent_id)) {
+            $comment_parent_id = 0;
+        }
+
+        // Check Empty Params
+        $comment_content = $_REQUEST['comment_content'];
+        $comment_author = $_REQUEST['comment_author'];
+        $comment_email = $_REQUEST['comment_email'];
+        if (empty($comment_content)) {
+            WordPress_Rewrite_API_Request::empty_param(__('متن نظر', 'woocommerce-dev'));
+        }
+        if (empty($comment_author)) {
+            WordPress_Rewrite_API_Request::empty_param(__('نام و نام خانوادگی', 'woocommerce-dev'));
+        }
+
+        // Check Email
+        if (!empty($comment_email)) {
+            if (is_email($comment_email) === false) {
+                wp_send_json_error(array(
+                    'message' => 'لطفا ایمیل را به شکل صحیح وارد نمایید'
+                ), 400);
+            }
+        }
+
+        // Rating
+        $rating = null;
+        if (isset($_REQUEST['comment_rating']) and !empty($_REQUEST['comment_rating']) and is_numeric($_REQUEST['comment_rating'])) {
+            $rating = $_REQUEST['comment_rating'];
+        }
+
+        // do action
+        do_action('woocommerce_dev_add_reviews_error', $product_id);
+
+        // Add Review
+        $_comment = WooCommerce_Review::add(array(
+            'comment_post_ID' => $product_id,
+            'comment_author' => $comment_author,
+            'comment_author_email' => $comment_email,
+            'comment_content' => nl2br($comment_content),
+            'comment_parent' => $comment_parent_id
+        ), $rating);
+
+        if ($_comment['id'] === false) {
+            wp_send_json_error(array(
+                'message' => 'ارسال نظر موفقیت آمیز نبود لطفا دوباره تلاش کنید'
+            ), 400);
+        }
+
+        // Response
+        $text_success = 'نظر شما با موفقیت ثبت گردید و پس از تایید نمایش داده می شود';
+        if ($_comment['arg']['comment_approved'] == 1) {
+            $text_success = 'نظر شما با موفقیت ثبت گردید';
+        }
+        wp_send_json_success(array(
+            'message' => $text_success,
+        ), 200);
+    }
 
 }
 

@@ -161,6 +161,34 @@ class WooCommerce_Helper
     }
 
     /**
+     * Check is Page
+     *
+     * @param string $type
+     * @param string $value
+     * @return bool
+     * @see woocommerce\includes\wc-conditional-functions.php
+     */
+    public static function is_page($type = '', $value ='')
+    {
+        switch ($type) {
+            case "cart":
+                return is_cart();
+                break;
+            case "my-account":
+                return is_account_page();
+                break;
+            case "checkout":
+                return is_checkout();
+                break;
+            case "product":
+                return is_product();
+                break;
+        }
+
+        return is_page($type);
+    }
+
+    /**
      * List of Notice Type apply_filters( 'woocommerce_notice_types', array( 'error', 'success', 'notice' ) );
      * @param string $notice_type
      * @return array[]
@@ -347,6 +375,33 @@ class WooCommerce_Helper
         }
 
         return $r;
+    }
+
+    /**
+     * Get User IP
+     *
+     * @return mixed|string
+     */
+    public static function get_user_ip()
+    {
+        $ip = '';
+        if (isset($_SERVER['HTTP_CLIENT_IP']))
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        else if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        else if (isset($_SERVER['HTTP_X_FORWARDED']))
+            $ip = $_SERVER['HTTP_X_FORWARDED'];
+        else if (isset($_SERVER['HTTP_X_CLUSTER_CLIENT_IP']))
+            $ip = $_SERVER['HTTP_X_CLUSTER_CLIENT_IP'];
+        else if (isset($_SERVER['HTTP_FORWARDED_FOR']))
+            $ip = $_SERVER['HTTP_FORWARDED_FOR'];
+        else if (isset($_SERVER['HTTP_FORWARDED']))
+            $ip = $_SERVER['HTTP_FORWARDED'];
+        else if (isset($_SERVER['REMOTE_ADDR']))
+            $ip = $_SERVER['REMOTE_ADDR'];
+        else
+            $ip = '';
+        return $ip;
     }
 }
 

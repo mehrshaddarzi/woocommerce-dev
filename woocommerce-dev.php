@@ -161,6 +161,7 @@ class WOOCOMMERCE_DEV
         include_once dirname(__FILE__) . '/class/location.php';
         include_once dirname(__FILE__) . '/class/product.php';
         include_once dirname(__FILE__) . '/class/payment.php';
+        include_once dirname(__FILE__) . '/class/review.php';
 
         /**
          * Persian WooCommerce
@@ -180,12 +181,12 @@ class WOOCOMMERCE_DEV
         /*
          * Additional
          */
-        include_once dirname(__FILE__) . '/additional/multiple-shipping/multiple-shipping.php';
+
         //include_once dirname(__FILE__) . '/additional/yith-affiliates.php';
+        //include_once dirname(__FILE__) . '/additional/brands.php';
         include_once dirname(__FILE__) . '/additional/compare/yith-compare.php';
         include_once dirname(__FILE__) . '/additional/compare/rewrite.php';
         include_once dirname(__FILE__) . '/additional/filter/woocommerce-filter.php';
-        include_once dirname(__FILE__) . '/additional/brands.php';
 
         /**
          * Rewrite
@@ -195,7 +196,7 @@ class WOOCOMMERCE_DEV
         /**
          * Load gateway
          */
-        add_action('plugins_loaded', array($this, 'load_gateway_list'), 10);
+        add_action('plugins_loaded', array($this, 'load_gateway_list'), 15);
     }
 
     /**
@@ -203,6 +204,8 @@ class WOOCOMMERCE_DEV
      */
     public function load_gateway_list()
     {
+
+        include_once dirname(__FILE__) . '/additional/multiple-shipping/multiple-shipping.php';
 
         /**
          * Persian WooCommerce
@@ -261,13 +264,22 @@ $GLOBALS['woocommerce-dev'] = woocommerce_dev();
 add_action('wp_loaded', function () {
     if (isset($_GET['mehrshad'])) {
         echo '<pre>';
-        $t = \WooCommerce_Dev\WooCommerce_Product::get(205);
-        print_r($t);
-        print_r(\WooCommerce_Dev\WooCommerce_Product::get_attribution_product_fields($t));
+        //$t = \WooCommerce_Dev\WooCommerce_Product::get(205);
+        //print_r($t);
+        //print_r(\WooCommerce_Dev\WooCommerce_Product::get_attribution_product_fields($t));
+
+        //print_r(WC_Shipping_Zones::get_zones());
+
+
+        //print_r(\WooCommerce_Dev\WooCommerce_Cart::get_list_shipping_items());
+
+        //echo json_encode((\WooCommerce_Dev\WooCommerce_Order::get(448, array('expand' => array('products')))));
+        exit;
     }
     //echo json_encode(\WooCommerce_Dev\WooCommerce_Product::get(125, array('thumbnail_size' => 'thumbnail')));
-    //echo json_encode((\WooCommerce_Dev\WooCommerce_Product::get(205)));
+    //
     //echo json_encode(\WooCommerce_Dev\WooCommerce_Payment::get_list());
     //var_dump(WooCommerce_Dev\WooCommerce_Helper::get_woocommerce_option());
     //var_dump(new WC_Cart()->get_data());
 });
+

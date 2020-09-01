@@ -1,0 +1,514 @@
+{
+  "id": 448,
+  "order_number": "448",
+  "order_key": "wc_order_Aib4RSQ8cTaIg",
+  "created_at": "2020-08-27T08:16:12Z",
+  "updated_at": "2020-08-27T07:17:11Z",
+  "completed_at": "1970-01-01T00:00:00Z",
+  "status": "pending",
+  "status-rendered": "در انتظار پرداخت",
+  "currency": "IRT",
+  "total": "35000", // مبلغ قابل پرداخت بعد از محاسبات
+  "subtotal": "30000", //مجموع قیمت کالا
+  "total_line_items_quantity": 3,
+  "total_tax": "0",
+  "total_shipping": "0",
+  "cart_tax": "0",
+  "shipping_tax": "0",
+  "total_discount": "5000", // مجموع تخفیف
+  "shipping_methods": "",
+  "payment_details": {
+    "method_id": "",
+    "method_title": "",
+    "paid": false
+  },
+  "billing_address": {
+    "first_name": "مهدی",
+    "last_name": "حسینی",
+    "company": "",
+    "address_1": "آدرس اول",
+    "address_2": "آدروس دوم",
+    "city": "شهر",
+    "state": "استان من",
+    "postcode": "47533",
+    "country": "NR",
+    "email": "mehrshad.198@gmail.com",
+    "phone": "09358510091"
+  },
+  "shipping_address": {
+    "first_name": "مهرشاد",
+    "last_name": "درزی",
+    "company": "شرکت من",
+    "address_1": "آدرس من",
+    "address_2": "آدرس دوم",
+    "city": "شهر",
+    "state": "استان من",
+    "postcode": "",
+    "country": "NR"
+  },
+  "note": "",
+  "customer_ip": "",
+  "customer_user_agent": "",
+  "customer_id": 2,
+  "view_order_url": "http://localhost/orgame.ir/my-account/view-order/448/",
+  "line_items": [
+    {
+      "id": 1,
+      "subtotal": "20000",
+      "subtotal_tax": "0",
+      "total": "16666",
+      "total_tax": "0",
+      "price": "8333",
+      "quantity": 2,
+      "tax_class": "",
+      "name": "پرتقال تخم دار همدان تابستانه",
+      "product_id": 198,
+      "sku": "123",
+      "meta": [
+        {
+          "key": "_reduced_stock",
+          "value": "2",
+          "label": "_reduced_stock"
+        }
+      ],
+      "product_data": {
+        "title": "پرتقال تخم دار همدان تابستانه",
+        "id": 198,
+        "created_at": "2020-08-08T17:03:13Z",
+        "updated_at": "2020-08-27T07:14:24Z",
+        "type": "simple",
+        "status": "publish",
+        "downloadable": false,
+        "virtual": false,
+        "permalink": "http://localhost/orgame.ir/product/%d9%be%d8%b1%d8%aa%d9%82%d8%a7%d9%84-%d8%aa%d8%ae%d9%85-%d8%af%d8%a7%d8%b1/",
+        "sku": "123",
+        "price": "10000",
+        "regular_price": "23000",
+        "sale_price": "10000",
+        "price_html": "23,000 تومان 10,000 تومان",
+        "taxable": false,
+        "tax_status": "taxable",
+        "tax_class": "",
+        "managing_stock": true,
+        "stock_quantity": 8,
+        "in_stock": true,
+        "backorders_allowed": false,
+        "backordered": false,
+        "sold_individually": false,
+        "purchaseable": true,
+        "featured": false,
+        "visible": true,
+        "catalog_visibility": "visible",
+        "on_sale": true,
+        "product_url": "",
+        "button_text": "",
+        "weight": "0.3",
+        "dimensions": {
+          "length": "",
+          "width": "",
+          "height": "",
+          "unit": "cm"
+        },
+        "shipping_required": true,
+        "shipping_taxable": true,
+        "shipping_class": "",
+        "shipping_class_id": null,
+        "description": "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</p>\n",
+        "short_description": "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</p>\n",
+        "reviews_allowed": true,
+        "average_rating": "0.00",
+        "rating_count": 0,
+        "related_ids": [
+          357,
+          205
+        ],
+        "upsell_ids": [
+
+        ],
+        "cross_sell_ids": [
+
+        ],
+        "parent_id": 0,
+        "categories": [
+          {
+            "term_id": 15,
+            "name": "غذای تازه",
+            "slug": "fresh-food",
+            "term_group": 0,
+            "term_taxonomy_id": 15,
+            "taxonomy": "product_cat",
+            "description": "",
+            "parent": 0,
+            "count": 3,
+            "filter": "raw"
+          },
+          {
+            "term_id": 21,
+            "name": "پرتقال",
+            "slug": "orange",
+            "term_group": 0,
+            "term_taxonomy_id": 21,
+            "taxonomy": "product_cat",
+            "description": "",
+            "parent": 18,
+            "count": 3,
+            "filter": "raw"
+          },
+          {
+            "term_id": 18,
+            "name": "میوه تازه",
+            "slug": "fresh-fruit",
+            "term_group": 0,
+            "term_taxonomy_id": 18,
+            "taxonomy": "product_cat",
+            "description": "",
+            "parent": 15,
+            "count": 3,
+            "filter": "raw"
+          }
+        ],
+        "tags": [
+
+        ],
+        "images": [
+          {
+            "id": 201,
+            "created_at": "2020-08-08T16:46:06Z",
+            "updated_at": "2020-08-08T16:46:06Z",
+            "src": "http://localhost/orgame.ir/storage/2020/08/product-10.jpg",
+            "title": "product-10",
+            "alt": "",
+            "position": 0
+          },
+          {
+            "id": 200,
+            "created_at": "2020-08-08T16:46:04Z",
+            "updated_at": "2020-08-08T16:46:04Z",
+            "src": "http://localhost/orgame.ir/storage/2020/08/product-1.jpg",
+            "title": "product-1",
+            "alt": "",
+            "position": 1
+          },
+          {
+            "id": 202,
+            "created_at": "2020-08-08T16:46:07Z",
+            "updated_at": "2020-08-08T16:46:07Z",
+            "src": "http://localhost/orgame.ir/storage/2020/08/product-2.jpg",
+            "title": "product-2",
+            "alt": "",
+            "position": 2
+          }
+        ],
+        "featured_src": "http://localhost/orgame.ir/storage/2020/08/product-10.jpg",
+        "attributes": [
+
+        ],
+        "downloads": [
+
+        ],
+        "download_limit": -1,
+        "download_expiry": -1,
+        "download_type": "standard",
+        "purchase_note": "",
+        "total_sales": 0,
+        "variations": [
+
+        ],
+        "parent": [
+
+        ],
+        "grouped_products": [
+
+        ],
+        "menu_order": 0,
+        "thumbnail_id": 201,
+        "weight_rendered": "0.3 کیلوگرم",
+        "dimensions_rendered": "نامعلوم",
+        "discount": {
+          "on_sale": true,
+          "price_off": 13000,
+          "percentage_off": 57
+        },
+        "on_sale_from_date": "2020-08-27T08:10:32Z",
+        "on_sale_to_date": "2020-08-27T08:10:32Z",
+        "get_min_purchase_quantity": 1,
+        "get_max_purchase_quantity": 8,
+        "reviews_count": 0,
+        "product_type": "محصول ساده",
+        "template": {
+          "is_new": "yes",
+          "primary_category_id": 15,
+          "star": "</i></i></i></i></i>"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "subtotal": "10000",
+      "subtotal_tax": "0",
+      "total": "8334",
+      "total_tax": "0",
+      "price": "8334",
+      "quantity": 1,
+      "tax_class": "",
+      "name": "پرتقال تخم دار شمال پرتقال تخم دار شمال",
+      "product_id": 357,
+      "sku": "5896",
+      "meta": [
+        {
+          "key": "_reduced_stock",
+          "value": "1",
+          "label": "_reduced_stock"
+        }
+      ],
+      "product_data": {
+        "title": "پرتقال تخم دار شمال پرتقال تخم دار شمال",
+        "id": 357,
+        "created_at": "2020-08-22T12:27:05Z",
+        "updated_at": "2020-08-27T07:14:45Z",
+        "type": "simple",
+        "status": "publish",
+        "downloadable": false,
+        "virtual": false,
+        "permalink": "http://localhost/orgame.ir/product/%d9%be%d8%b1%d8%aa%d9%82%d8%a7%d9%84-%d8%aa%d8%ae%d9%85-%d8%af%d8%a7%d8%b1-copy/",
+        "sku": "5896",
+        "price": "10000",
+        "regular_price": "23000",
+        "sale_price": "10000",
+        "price_html": "10,000 تومان",
+        "taxable": false,
+        "tax_status": "taxable",
+        "tax_class": "",
+        "managing_stock": true,
+        "stock_quantity": 9,
+        "in_stock": true,
+        "backorders_allowed": false,
+        "backordered": false,
+        "sold_individually": false,
+        "purchaseable": true,
+        "featured": false,
+        "visible": true,
+        "catalog_visibility": "visible",
+        "on_sale": false,
+        "product_url": "",
+        "button_text": "",
+        "weight": "0.3",
+        "dimensions": {
+          "length": "12",
+          "width": "13",
+          "height": "14",
+          "unit": "سانتیمتر"
+        },
+        "shipping_required": true,
+        "shipping_taxable": true,
+        "shipping_class": "",
+        "shipping_class_id": null,
+        "description": "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</p>\n",
+        "short_description": "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</p>\n",
+        "reviews_allowed": true,
+        "average_rating": "0.00",
+        "rating_count": 0,
+        "related_ids": [
+          205,
+          198
+        ],
+        "upsell_ids": [
+
+        ],
+        "cross_sell_ids": [
+
+        ],
+        "parent_id": 0,
+        "categories": [
+          {
+            "term_id": 15,
+            "name": "غذای تازه",
+            "slug": "fresh-food",
+            "term_group": 0,
+            "term_taxonomy_id": 15,
+            "taxonomy": "product_cat",
+            "description": "",
+            "parent": 0,
+            "count": 3,
+            "filter": "raw"
+          },
+          {
+            "term_id": 21,
+            "name": "پرتقال",
+            "slug": "orange",
+            "term_group": 0,
+            "term_taxonomy_id": 21,
+            "taxonomy": "product_cat",
+            "description": "",
+            "parent": 18,
+            "count": 3,
+            "filter": "raw"
+          },
+          {
+            "term_id": 18,
+            "name": "میوه تازه",
+            "slug": "fresh-fruit",
+            "term_group": 0,
+            "term_taxonomy_id": 18,
+            "taxonomy": "product_cat",
+            "description": "",
+            "parent": 15,
+            "count": 3,
+            "filter": "raw"
+          }
+        ],
+        "tags": [
+
+        ],
+        "images": [
+          {
+            "id": 201,
+            "created_at": "2020-08-08T16:46:06Z",
+            "updated_at": "2020-08-08T16:46:06Z",
+            "src": "http://localhost/orgame.ir/storage/2020/08/product-10.jpg",
+            "title": "product-10",
+            "alt": "",
+            "position": 0
+          },
+          {
+            "id": 200,
+            "created_at": "2020-08-08T16:46:04Z",
+            "updated_at": "2020-08-08T16:46:04Z",
+            "src": "http://localhost/orgame.ir/storage/2020/08/product-1.jpg",
+            "title": "product-1",
+            "alt": "",
+            "position": 1
+          },
+          {
+            "id": 202,
+            "created_at": "2020-08-08T16:46:07Z",
+            "updated_at": "2020-08-08T16:46:07Z",
+            "src": "http://localhost/orgame.ir/storage/2020/08/product-2.jpg",
+            "title": "product-2",
+            "alt": "",
+            "position": 2
+          },
+          {
+            "id": 203,
+            "created_at": "2020-08-08T16:46:08Z",
+            "updated_at": "2020-08-08T16:46:08Z",
+            "src": "http://localhost/orgame.ir/storage/2020/08/product-15.jpg",
+            "title": "product-15",
+            "alt": "",
+            "position": 3
+          }
+        ],
+        "featured_src": "http://localhost/orgame.ir/storage/2020/08/product-10.jpg",
+        "attributes": [
+          {
+            "name": "رنگ",
+            "slug": "color",
+            "position": 0,
+            "visible": true,
+            "variation": false,
+            "options": [
+              "آبی"
+            ],
+            "terms": {
+              "30": {
+                "term_id": 30,
+                "name": "آبی",
+                "slug": "blue",
+                "term_group": 0,
+                "term_taxonomy_id": 30,
+                "taxonomy": "pa_color",
+                "description": "",
+                "parent": 0,
+                "count": 2,
+                "filter": "raw"
+              }
+            }
+          },
+          {
+            "name": "سایز",
+            "slug": "size",
+            "position": 1,
+            "visible": true,
+            "variation": false,
+            "options": [
+              "M"
+            ],
+            "terms": {
+              "35": {
+                "term_id": 35,
+                "name": "M",
+                "slug": "m",
+                "term_group": 0,
+                "term_taxonomy_id": 35,
+                "taxonomy": "pa_size",
+                "description": "",
+                "parent": 0,
+                "count": 2,
+                "filter": "raw"
+              }
+            }
+          }
+        ],
+        "downloads": [
+
+        ],
+        "download_limit": -1,
+        "download_expiry": -1,
+        "download_type": "standard",
+        "purchase_note": "",
+        "total_sales": 0,
+        "variations": [
+
+        ],
+        "parent": [
+
+        ],
+        "grouped_products": [
+
+        ],
+        "menu_order": 0,
+        "thumbnail_id": 201,
+        "weight_rendered": "0.3 کیلوگرم",
+        "dimensions_rendered": "12 × 13 × 14 سانتیمتر",
+        "discount": {
+          "on_sale": false,
+          "price_off": 0,
+          "percentage_off": 0
+        },
+        "on_sale_from_date": "",
+        "on_sale_to_date": "",
+        "get_min_purchase_quantity": 1,
+        "get_max_purchase_quantity": 9,
+        "reviews_count": 0,
+        "product_type": "محصول ساده",
+        "template": {
+          "is_new": "yes",
+          "primary_category_id": 15,
+          "star": "</i></i></i></i></i>"
+        }
+      }
+    }
+  ],
+  "shipping_lines": [
+
+  ],
+  "tax_lines": [
+
+  ],
+  "fee_lines": [
+    {
+      "id": 3,
+      "title": "هزینه 10,000 تومان",
+      "tax_class": "",
+      "total": "10000",
+      "total_tax": "0"
+    }
+  ],
+  "coupon_lines": [
+    {
+      "id": 4,
+      "code": "t2",
+      "amount": "5000"
+    }
+  ]
+}

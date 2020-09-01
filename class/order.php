@@ -31,23 +31,25 @@ class WooCommerce_Order
      */
     public static function get($order_id, $filter = array())
     {
+        //@TODO Use wp_set_cache similar product in woocommerce dev
         // Get an instance of the WC_Order object
         $order = wc_get_order($order_id);
 
         // Get the decimal precession.
         $dp = apply_filters('woocommerce_dev_order_dp', 0);
         $expand = array();
-        if (!empty($filter['expand'])) {
-            $expand = explode(',', $filter['expand']);
+        if (isset($filter['expand'])) {
+            $expand = $filter['expand'];
         }
 
         /**
          * Expand List:
-         * $filter['expand'] = 'products';
+         * $filter['expand'] = array('products');
+         * \WooCommerce_Dev\WooCommerce_Order::get(448, array('expand' => array('products')));
          */
 
         // Get Order Data
-        $order_data = apply_filters('woocommerce_dev_order_data', array(
+        $order_data = array(
             'id' => $order->get_id(),
             'order_number' => $order->get_order_number(),
             'order_key' => $order->get_order_key(),
@@ -55,6 +57,7 @@ class WooCommerce_Order
             'updated_at' => WooCommerce_Helper::format_datetime($order->get_date_modified() ? $order->get_date_modified()->getTimestamp() : 0, false, false), // API gives UTC times.
             'completed_at' => WooCommerce_Helper::format_datetime($order->get_date_completed() ? $order->get_date_completed()->getTimestamp() : 0, false, false), // API gives UTC times.
             'status' => $order->get_status(),
+            'status-rendered' => esc_html(wc_get_order_status_name($order->get_status())),
             'currency' => $order->get_currency(),
             'total' => wc_format_decimal($order->get_total(), $dp),
             'subtotal' => wc_format_decimal($order->get_subtotal(), $dp),
@@ -104,7 +107,7 @@ class WooCommerce_Order
             'tax_lines' => array(),
             'fee_lines' => array(),
             'coupon_lines' => array(),
-        ));
+        );
 
         // Add line items.
         foreach ($order->get_items() as $item_id => $item) {
@@ -134,11 +137,7 @@ class WooCommerce_Order
             );
 
             if (in_array('products', $expand) && is_object($product)) {
-                $_product_data = WooCommerce_Product::get($product->get_id());
-
-                if (isset($_product_data['product'])) {
-                    $line_item['product_data'] = $_product_data['product'];
-                }
+                $line_item['product_data'] = WooCommerce_Product::get($product->get_id());
             }
 
             $order_data['line_items'][] = $line_item;
@@ -206,6 +205,10 @@ class WooCommerce_Order
             $order_data['coupon_lines'][] = $coupon_line;
         }
 
+        // Apply Filter
+        $order_data = apply_filters('woocommerce_dev_order_data', $order_data, $order_id);
+
+        // Return Data
         return $order_data;
     }
 
@@ -239,7 +242,7 @@ class WooCommerce_Order
                 'country' => ''
             )
         );
-        $data = wp_parse_args($default, $args);
+        $data = wp_parse_args($args, $default);
 
         // Get Billing Email
         if (is_user_logged_in() and empty($data['billing_email'])) {

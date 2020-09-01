@@ -29,7 +29,7 @@ class WooCommerce_Review
     public static function is_enable_rating()
     {
         $option = get_option('woocommerce_enable_review_rating');
-        return $option == "yes";
+        return ($option == "yes");
     }
 
     /**
@@ -42,7 +42,7 @@ class WooCommerce_Review
     public static function get($args = array())
     {
         $default = array(
-            'type' => 'comment',
+            'type' => 'review',
             'status' => 'approve',
             'post_id' => 0,
             'number' => false,
@@ -78,22 +78,10 @@ class WooCommerce_Review
      *
      * @param array $args
      * @param null $rating
-     * @return bool|false|int
+     * @return array
      */
     public static function add($args = array(), $rating = null)
     {
-        // Add Comment
-        $user_email = '';
-        if (is_user_logged_in()) {
-            $user_data = get_userdata(get_current_user_id());
-            if (!empty($user_data->user_email)) {
-                $user_email = $user_data->user_email;
-            }
-        }
-
-        // Get User IP
-        $ip = isset($_SERVER['HTTP_CLIENT_IP']) ? $_SERVER['HTTP_CLIENT_IP'] : isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
-
         // Get User Agent
         $user_agent = '';
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
@@ -105,19 +93,36 @@ class WooCommerce_Review
             'comment_type' => 'review',
             'comment_post_ID' => 0,
             'comment_author' => '',
-            'comment_author_email' => $user_email,
+            'comment_author_email' => '',
+            'comment_author_url' => '',
             // Use in Ajax Request For Send | 'comment_text': comment_content.replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '<br />'),
             'comment_content' => '',
             'comment_parent' => 0,
             'user_id' => get_current_user_id(),
             'comment_date' => current_time('mysql'),
             'comment_date_gmt' => current_time('mysql', true),
-            'comment_author_IP' => $ip,
+            'comment_author_IP' => WooCommerce_Helper::get_user_ip(),
             'comment_agent' => $user_agent,
             // 0= Hold 1= Approved @see https://developer.wordpress.org/reference/functions/wp_set_comment_status/
             'comment_approved' => 0,
         );
         $arg = wp_parse_args($args, $default);
+
+        // Comment_approved
+        if (is_user_logged_in()) {
+            $user_data = get_userdata(get_current_user_id());
+            if (!in_array('subscriber', (array)$user_data->roles)) {
+                $arg['comment_approved'] = 1;
+            }
+        }
+
+        // Comment Email Author
+        if (empty($arg['comment_author_email']) and is_user_logged_in()) {
+            $user_data = get_userdata(get_current_user_id());
+            if (!empty($user_data->user_email)) {
+                $arg['comment_author_email'] = $user_data->user_email;
+            }
+        }
 
         // Insert Data
         $insert_id = wp_insert_comment(wp_filter_comment($arg));
@@ -128,7 +133,8 @@ class WooCommerce_Review
         }
 
         // return $insert_id
-        return $insert_id;
+        // If id == false has Error
+        return array('id' => $insert_id, 'arg' => $arg);
     }
 
     /**
