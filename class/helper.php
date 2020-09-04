@@ -27,6 +27,7 @@ class WooCommerce_Helper
     {
         $option = array(
             'timezone' => wc_timezone_string(),
+            'permalinks' => get_option('woocommerce_permalinks'),
             'currency' => get_woocommerce_currency(),
             'currency_format' => get_woocommerce_currency_symbol(),
             'tax_included' => wc_prices_include_tax(),
@@ -168,7 +169,7 @@ class WooCommerce_Helper
      * @return bool
      * @see woocommerce\includes\wc-conditional-functions.php
      */
-    public static function is_page($type = '', $value ='')
+    public static function is_page($type = '', $value = '')
     {
         switch ($type) {
             case "cart":
