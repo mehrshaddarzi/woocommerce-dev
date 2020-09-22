@@ -103,6 +103,9 @@ class wc
             }
         }
 
+        // Action Before Add To Cart
+        do_action('woocommerce_dev_before_add_to_cart', $product_id, $variation_id, $quantity);
+
         // Add to Cart
         $cart_item_key = false;
         try {
@@ -194,17 +197,17 @@ class wc
         $comment_author = $_REQUEST['comment_author'];
         $comment_email = $_REQUEST['comment_email'];
         if (empty($comment_content)) {
-            WordPress_Rewrite_API_Request::empty_param(__('متن نظر', 'woocommerce-dev'));
+            WordPress_Rewrite_API_Request::empty_param(__('Review Message', 'woocommerce-dev'));
         }
         if (empty($comment_author)) {
-            WordPress_Rewrite_API_Request::empty_param(__('نام و نام خانوادگی', 'woocommerce-dev'));
+            WordPress_Rewrite_API_Request::empty_param(__('Full name', 'woocommerce-dev'));
         }
 
         // Check Email
         if (!empty($comment_email)) {
             if (is_email($comment_email) === false) {
                 wp_send_json_error(array(
-                    'message' => 'لطفا ایمیل را به شکل صحیح وارد نمایید'
+                    'message' => __('Please enter a valid email', 'woocommerce-dev')
                 ), 400);
             }
         }
@@ -229,14 +232,14 @@ class wc
 
         if ($_comment['id'] === false) {
             wp_send_json_error(array(
-                'message' => 'ارسال نظر موفقیت آمیز نبود لطفا دوباره تلاش کنید'
+                'message' => __('Please try again', 'woocommerce-dev')
             ), 400);
         }
 
         // Response
-        $text_success = 'نظر شما با موفقیت ثبت گردید و پس از تایید نمایش داده می شود';
+        $text_success = __('Review submitted successfully', 'woocommerce-dev');
         if ($_comment['arg']['comment_approved'] == 1) {
-            $text_success = 'نظر شما با موفقیت ثبت گردید';
+            $text_success = __('Review submitted successfully', 'woocommerce-dev');
         }
         wp_send_json_success(array(
             'message' => $text_success,

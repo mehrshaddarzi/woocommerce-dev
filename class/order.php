@@ -300,7 +300,7 @@ class WooCommerce_Order
     public static function query($arg = array())
     {
         $default = array(
-            'orderby' => 'date',
+            'orderby' => 'ID',
             'order' => 'DESC',
             'return' => 'ids',
             'type' => wc_get_order_types('view-orders'),
@@ -317,6 +317,14 @@ class WooCommerce_Order
     public static function get_order_status_list()
     {
         return wc_get_order_statuses();
+    }
+
+    /**
+     * Get Only Paid Status Order
+     */
+    public static function get_paid_order_status()
+    {
+        return wc_get_is_paid_statuses();
     }
 
     /**
@@ -363,6 +371,69 @@ class WooCommerce_Order
         // Note emails
         remove_action('woocommerce_new_customer_note_notification', array($email_class->emails['WC_Email_Customer_Note'], 'trigger'));
     }
+
+    /**
+     * Easy Get Product ids from Order
+     *
+     * @param $order_id
+     * @return array
+     */
+    public static function get_order_products_ids($order_id)
+    {
+        $order = wc_get_order($order_id);
+        $items = $order->get_items();
+        $product_ids = array();
+        foreach ($items as $item) {
+            $product_name = $item->get_name();
+            $product_id = $item->get_product_id();
+            $product_variation_id = $item->get_variation_id();
+            $product_ids[$product_id] = WooCommerce_Product::get_product_type($product_id);
+        }
+        return $product_ids;
+    }
+
+    /**
+     * Get All User Purchase Product IDS
+     *
+     * @param int $user_id
+     * @param bool $product_type
+     * @return array
+     */
+    public static function get_all_purchase_product_ids($user_id = 0, $product_type = false)
+    {
+        $orders = self::query(array(
+            'status' => self::get_paid_order_status(),
+            'customer_id' => $user_id,
+        ));
+        $list = array();
+
+        foreach ($orders as $order_id) {
+            $order = wc_get_order($order_id);
+            $items = $order->get_items();
+            $product_ids = array();
+            foreach ($items as $item) {
+                $product_name = $item->get_name();
+                $product_id = $item->get_product_id();
+                $product_variation_id = $item->get_variation_id();
+                $_product_type = WooCommerce_Product::get_product_type($product_id);
+
+                if (!empty($product_type) and $_product_type != $product_type) {
+                    continue;
+                }
+
+                $list[$product_id] = array(
+                    'order_id' => $order_id,
+                    'date' => WooCommerce_Helper::format_datetime($order->get_date_created() ? $order->get_date_created()->getTimestamp() : 0, false, false),
+                    'product_id' => $product_id,
+                    'title' => get_the_title($product_id),
+                    'type' => $_product_type
+                );
+            }
+        }
+
+        return $list;
+    }
+
 }
 
 new WooCommerce_Order;

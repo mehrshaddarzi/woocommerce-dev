@@ -76,6 +76,35 @@ class WooCommerce_Helper
     }
 
     /**
+     * Check User Bought Product
+     *
+     * @param $user_id
+     * @param int $product_id
+     * @return bool
+     */
+    public static function is_user_bought_product($user_id, $product_id = 0)
+    {
+        // https://stackoverflow.com/questions/46749429/woocommerce-check-if-user-purchased-a-product-in-the-past-60-days
+
+        $customer_email = '';
+        $user = get_user_by('id', $user_id);
+        if (isset($user->user_email) and !empty($user->user_email)) {
+            $customer_email = $user->user_email;
+        }
+        return wc_customer_bought_product($customer_email, $user_id, $product_id);
+    }
+
+    /**
+     * Get User IP
+     *
+     * @return string
+     */
+    public static function get_user_ip()
+    {
+        return \WC_Geolocation::get_ip_address();
+    }
+
+    /**
      * Get Tree Of Terms List
      *
      * @param $arg
@@ -378,32 +407,6 @@ class WooCommerce_Helper
         return $r;
     }
 
-    /**
-     * Get User IP
-     *
-     * @return mixed|string
-     */
-    public static function get_user_ip()
-    {
-        $ip = '';
-        if (isset($_SERVER['HTTP_CLIENT_IP']))
-            $ip = $_SERVER['HTTP_CLIENT_IP'];
-        else if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
-            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        else if (isset($_SERVER['HTTP_X_FORWARDED']))
-            $ip = $_SERVER['HTTP_X_FORWARDED'];
-        else if (isset($_SERVER['HTTP_X_CLUSTER_CLIENT_IP']))
-            $ip = $_SERVER['HTTP_X_CLUSTER_CLIENT_IP'];
-        else if (isset($_SERVER['HTTP_FORWARDED_FOR']))
-            $ip = $_SERVER['HTTP_FORWARDED_FOR'];
-        else if (isset($_SERVER['HTTP_FORWARDED']))
-            $ip = $_SERVER['HTTP_FORWARDED'];
-        else if (isset($_SERVER['REMOTE_ADDR']))
-            $ip = $_SERVER['REMOTE_ADDR'];
-        else
-            $ip = '';
-        return $ip;
-    }
 }
 
 new WooCommerce_Helper;

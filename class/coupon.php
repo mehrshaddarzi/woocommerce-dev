@@ -6,7 +6,11 @@ class WooCommerce_Coupon
 {
     public function __construct()
     {
+        // Create Coupon on Fly
+        // @see https://www.damiencarbery.com/2018/10/create-woocommerce-coupons-programmatically-a-proof-of-concept/
 
+        // Filter Coupon Data
+        // 'woocommerce_coupon_get_'{amount}
     }
 
     /**

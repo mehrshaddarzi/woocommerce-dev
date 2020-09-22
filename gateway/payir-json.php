@@ -159,6 +159,9 @@ class WC_PayIR_Json_Gateway extends \WC_Payment_Gateway
                 WC()->cart->empty_cart();
                 $order->save();
 
+                // Action
+                do_action( 'woocommerce_payment_complete', $order->get_id() );
+
                 // Use apply_filters( 'woocommerce_get_return_url', $return_url, $order ) filter
                 $return_url = $this->get_return_url($order);
                 wp_redirect($return_url);
@@ -239,7 +242,7 @@ class WC_PayIR_Json_Gateway extends \WC_Payment_Gateway
         if (is_numeric($order)) {
             $this->order_id = $order;
 
-            $order = new پWC_Order($order);
+            $order = new WC_Order($order);
         }
 
         return $order;

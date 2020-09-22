@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce For Developer\n"
-"POT-Creation-Date: 2020-08-24 20:33+0430\n"
-"PO-Revision-Date: 2020-08-24 20:33+0430\n"
+"POT-Creation-Date: 2020-09-22 12:17+0330\n"
+"PO-Revision-Date: 2020-09-22 12:19+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -21,6 +21,125 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
+#: additional/affiliates/affiliates.php:155
+msgid "Date"
+msgstr "تاریخ"
+
+#: additional/affiliates/affiliates.php:156
+#: additional/affiliates/affiliates.php:208
+msgid "User"
+msgstr "کاربر"
+
+#: additional/affiliates/affiliates.php:157
+msgid "Price"
+msgstr "مبلغ"
+
+#: additional/affiliates/affiliates.php:158
+msgid "Bank Number"
+msgstr "شماره حساب بانک"
+
+#: additional/affiliates/affiliates.php:159 gateway/payir-json.php:104
+msgid "Description"
+msgstr "توضیحات"
+
+#: additional/affiliates/affiliates.php:160
+msgid "Checkout status"
+msgstr "وضعیت تسویه"
+
+#: additional/affiliates/affiliates.php:161
+#: additional/affiliates/affiliates.php:213
+msgid "Language"
+msgstr "زبان"
+
+#: additional/affiliates/affiliates.php:206
+msgid "Order ID"
+msgstr "شناسه سفارش"
+
+#: additional/affiliates/affiliates.php:207
+msgid "Order Date"
+msgstr "تاریخ سفارش"
+
+#: additional/affiliates/affiliates.php:209
+msgid "Total Price"
+msgstr "مبلغ کل"
+
+#: additional/affiliates/affiliates.php:210
+msgid "Affiliate user"
+msgstr "کاربر همکار"
+
+#: additional/affiliates/affiliates.php:211
+msgid "Rate"
+msgstr "نرخ"
+
+#: additional/affiliates/affiliates.php:212
+#: additional/affiliates/affiliates.php:220
+#: additional/affiliates/affiliates.php:296
+msgid "Commission"
+msgstr "کمیسیون"
+
+#: additional/affiliates/affiliates.php:221
+#: additional/affiliates/affiliates.php:297
+msgid "Checkout"
+msgstr "تسویه"
+
+#: additional/affiliates/affiliates.php:229
+#: additional/affiliates/affiliates.php:230
+msgid "Add"
+msgstr "افزودن"
+
+#: additional/affiliates/affiliates.php:231
+msgid "Create"
+msgstr "ایجاد"
+
+#: additional/affiliates/affiliates.php:232
+msgid "Edit"
+msgstr "ویرایش"
+
+#: additional/affiliates/affiliates.php:233
+msgid "Show"
+msgstr "نمایش"
+
+#: additional/affiliates/affiliates.php:234
+msgid "All"
+msgstr "همه"
+
+#: additional/affiliates/affiliates.php:235
+msgid "Search"
+msgstr "جستجو"
+
+#: additional/affiliates/affiliates.php:236
+msgid "Parent:"
+msgstr "والد:"
+
+#: additional/affiliates/affiliates.php:237
+msgid "No items."
+msgstr "هیچ آیتمی وجود ندارد."
+
+#: additional/affiliates/affiliates.php:238
+msgid "No items in trash."
+msgstr "هیچ آیتمی در سطل آشغال وجود ندارد."
+
+#: additional/affiliates/affiliates.php:295
+msgid "Settings"
+msgstr "تنظیمات"
+
+#: additional/affiliates/affiliates.php:362
+#: additional/affiliates/affiliates.php:363
+msgid "Affiliates"
+msgstr "همکاری در فروش"
+
+#: additional/affiliates/affiliates.php:369
+msgid "Update"
+msgstr "بروزرسانی"
+
+#: additional/affiliates/affiliates.php:370
+msgid "Options Updated"
+msgstr "بروزرسانی تنظیمات"
+
+#: additional/brands.php:18
+msgid "Brands"
+msgstr "برند ها"
+
 #: additional/compare/rewrite.php:39
 msgid "This product is in the product comparison list"
 msgstr "این محصول در لیست مقایسه محصولات وجود دارد"
@@ -29,7 +148,55 @@ msgstr "این محصول در لیست مقایسه محصولات وجود د�
 msgid "This product is not in the product comparison list"
 msgstr "این محصول در لیست مقایسه محصولات وجود ندارد"
 
-#: class/product.php:368 class/product.php:369
+#: additional/filter/woocommerce-filter.php:285
+msgid "Default sorting"
+msgstr ""
+
+#: additional/filter/woocommerce-filter.php:286
+msgid "Sort by latest"
+msgstr ""
+
+#: additional/filter/woocommerce-filter.php:287
+msgid "Sort by popularity"
+msgstr ""
+
+#: additional/filter/woocommerce-filter.php:288
+msgid "Sort by average rating"
+msgstr ""
+
+#: additional/filter/woocommerce-filter.php:290
+msgid "Sort by alphabet"
+msgstr "مرتب سازی بر اساس حروف الفبا"
+
+#: additional/filter/woocommerce-filter.php:292
+msgid "Sort by Views"
+msgstr "مرتب سازی بر اساس بازدید"
+
+#: additional/filter/woocommerce-filter.php:294
+msgid "Sort by price: low to high"
+msgstr ""
+
+#: additional/filter/woocommerce-filter.php:295
+msgid "Sort by price: high to low"
+msgstr ""
+
+#: class/cart.php:368
+msgid "Free shipping coupon"
+msgstr ""
+
+#. translators: %d: shipping package number
+#: class/cart.php:440
+#, php-format
+msgctxt "shipping packages"
+msgid "Shipping %d"
+msgstr ""
+
+#: class/cart.php:440
+msgctxt "shipping packages"
+msgid "Shipping"
+msgstr ""
+
+#: class/product.php:390 class/product.php:391
 msgid "Placeholder"
 msgstr ""
 
@@ -53,44 +220,60 @@ msgstr "فعال سازی / غیر فعال سازی"
 msgid "Title"
 msgstr "عنوان"
 
-#: gateway/payir-json.php:104
-msgid "Description"
-msgstr "توضیحات"
-
 #: gateway/payir-json.php:106
 msgid "This controls the description which the user sees during checkout."
 msgstr ""
 
 #: hook/acf.php:20
 msgid "Other"
-msgstr ""
+msgstr "دیگر"
 
-#: rewrite/rewrite.php:40
+#: rewrite/rewrite.php:41
 msgid "Invalid product ID"
 msgstr "شناسه محصول نامعتبر هست"
 
-#: rewrite/rewrite.php:79
+#: rewrite/rewrite.php:80
 msgid "The stock of this product in stock is less than your request."
 msgstr "موجودی انبار این محصول کم تر از میزان درخواستی شما هست."
 
-#: rewrite/rewrite.php:94
+#: rewrite/rewrite.php:95
 msgid "This is not a variable product."
 msgstr "این یک محصول متغیر نیست."
 
-#: rewrite/rewrite.php:100
+#: rewrite/rewrite.php:101
 msgid "The product ID of the variable is invalid."
 msgstr "شناسه محصول متغیر نامعتبر می باشد."
 
-#: woocommerce-dev.php:236
+#: rewrite/rewrite.php:200
+msgid "Review Message"
+msgstr "متن نقد و بررسی"
+
+#: rewrite/rewrite.php:203
+msgid "Full name"
+msgstr "نام و نام خانوادگی"
+
+#: rewrite/rewrite.php:210
+msgid "Please enter a valid email"
+msgstr "لطفا ایمیل را به شکل صحیح وارد کنید"
+
+#: rewrite/rewrite.php:235
+msgid "Please try again"
+msgstr "لطفا دوباره تلاش کنید"
+
+#: rewrite/rewrite.php:240 rewrite/rewrite.php:242
+msgid "Review submitted successfully"
+msgstr "نظر با موفقیت ارسال شد"
+
+#: woocommerce-dev.php:242
 msgid "Your installed PHP Version is:"
 msgstr "حداقل ورژن PHP برای نصب این افزونه:"
 
-#: woocommerce-dev.php:237
+#: woocommerce-dev.php:243
 msgid ""
 "The <strong>WooCommerce Dev</strong> plugin requires PHP version <strong>"
 msgstr ""
 
-#: woocommerce-dev.php:237
+#: woocommerce-dev.php:243
 msgid "</strong> or greater."
 msgstr ""
 
