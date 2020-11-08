@@ -412,6 +412,17 @@ class WooCommerce_Cart
     }
 
     /**
+     * Add Fee
+     *
+     * @param $title
+     * @param $price
+     */
+    public static function add_fee($title, $price)
+    {
+        WC()->cart->add_fee($title, $price);
+    }
+
+    /**
      * Get List shipping Item
      *
      * @return array

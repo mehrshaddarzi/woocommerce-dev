@@ -7,13 +7,13 @@ class WooCommerce_Product_Type
     public function __construct()
     {
         // Add or Remove Product Tabs
-        add_filter( 'woocommerce_product_data_tabs', array( $this, 'product_tabs' ), 10, 1 );
+        //add_filter( 'woocommerce_product_data_tabs', array( $this, 'product_tabs' ), 10, 1 );
 
         // Modify Product Type
-        add_filter( 'product_type_selector', array( $this, 'product_type' ) );
+        //add_filter( 'product_type_selector', array( $this, 'product_type' ) );
 
         // Disable Option download and Virtual From WooCommerce
-        add_filter( 'product_type_options', array( $this, 'product_type_options' ) );
+        //add_filter( 'product_type_options', array( $this, 'product_type_options' ) );
     }
 
     public function product_type_options( $options ) {

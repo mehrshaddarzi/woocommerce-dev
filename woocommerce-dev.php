@@ -261,25 +261,3 @@ function woocommerce_dev()
 // Global for backwards compatibility.
 $GLOBALS['woocommerce-dev'] = woocommerce_dev();
 
-add_action('wp_loaded', function () {
-    if (isset($_GET['mehrshad'])) {
-        echo '<pre>';
-        //$t = \WooCommerce_Dev\WooCommerce_Product::get(205);
-        //print_r($t);
-        //print_r(\WooCommerce_Dev\WooCommerce_Product::get_attribution_product_fields($t));
-
-        //print_r(WC_Shipping_Zones::get_zones());
-
-
-        //print_r(\WooCommerce_Dev\WooCommerce_Cart::get_list_shipping_items());
-
-        //echo json_encode((\WooCommerce_Dev\WooCommerce_Order::get(448, array('expand' => array('products')))));
-        exit;
-    }
-    //echo json_encode(\WooCommerce_Dev\WooCommerce_Product::get(125, array('thumbnail_size' => 'thumbnail')));
-    //
-    //echo json_encode(\WooCommerce_Dev\WooCommerce_Payment::get_list());
-    //var_dump(WooCommerce_Dev\WooCommerce_Helper::get_woocommerce_option());
-    //var_dump(new WC_Cart()->get_data());
-});
-
