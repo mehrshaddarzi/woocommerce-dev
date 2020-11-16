@@ -358,4 +358,4 @@ function Load_ZarinPal_Gateway()
     }
 }
 
-add_action('plugins_loaded', 'Load_ZarinPal_Gateway', 0);
+add_action('plugins_loaded', 'Load_ZarinPal_Gateway', 99);
