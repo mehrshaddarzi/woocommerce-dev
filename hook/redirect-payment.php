@@ -23,7 +23,6 @@ class WooCommerce_Redirect_Payment
         $order = wc_get_order($order_id);
         // Use wc_get_payment_gateway_by_order($order_id)
         if (in_array($order->get_payment_method(), array('cod'))) {
-            $result['redirect'] = add_query_arg(array('status_order' => 'success', 'order_id' => $order_id), wc_get_checkout_url);
             return $result;
         }
 
@@ -54,9 +53,9 @@ class WooCommerce_Redirect_Payment
 
         // "completed" updated status for paid "processing" Orders (with all others payment methods)
         if ($order->has_status('processing') || $order->has_status('completed')) {
-            return add_query_arg(array('status_order' => 'success', 'order_id' => $order->get_id()), wc_get_checkout_url);
+            return add_query_arg(array('status_order' => 'success', 'order_id' => $order->get_id()), wc_get_checkout_url());
         } else {
-            return add_query_arg(array('status_order' => 'failed', 'order_id' => $order->get_id()), wc_get_checkout_url);
+            return add_query_arg(array('status_order' => 'failed', 'order_id' => $order->get_id()), wc_get_checkout_url());
         }
     }
 
@@ -79,10 +78,10 @@ class WooCommerce_Redirect_Payment
 
         // "completed" updated status for paid "processing" Orders (with all others payment methods)
         if ($order->has_status('processing') || $order->has_status('completed')) {
-            wp_redirect(add_query_arg(array('status_order' => 'success', 'order_id' => $order->get_id()), wc_get_checkout_url));
+            wp_redirect(add_query_arg(array('status_order' => 'success', 'order_id' => $order->get_id()), wc_get_checkout_url()));
             exit;
         } else {
-            wp_redirect(add_query_arg(array('status_order' => 'failed', 'order_id' => $order->get_id()), wc_get_checkout_url));
+            wp_redirect(add_query_arg(array('status_order' => 'failed', 'order_id' => $order->get_id()), wc_get_checkout_url()));
             exit;
         }
     }
