@@ -181,8 +181,8 @@ class WooCommerce_Order
                 'id' => $fee_item_id,
                 'title' => $fee_item->get_name(),
                 'tax_class' => $fee_item->get_tax_class(),
-                'total' => wc_format_decimal($order->get_line_total($fee_item), $dp),
-                'total_tax' => wc_format_decimal($order->get_line_tax($fee_item), $dp),
+                'total' => wc_format_decimal($fee_item->get_total(), $dp),
+                'total_tax' => wc_format_decimal($fee_item->get_total_tax(), $dp),
             );
         }
 
