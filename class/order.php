@@ -66,6 +66,7 @@ class WooCommerce_Order
             'total_shipping' => wc_format_decimal($order->get_shipping_total(), $dp),
             'cart_tax' => wc_format_decimal($order->get_cart_tax(), $dp),
             'shipping_tax' => wc_format_decimal($order->get_shipping_tax(), $dp),
+            'total_fees' => wc_format_decimal($order->get_total_fees(), $dp),
             'total_discount' => wc_format_decimal($order->get_total_discount(), $dp),
             'shipping_methods' => $order->get_shipping_method(),
             'payment_details' => array(
