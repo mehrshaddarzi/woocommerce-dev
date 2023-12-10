@@ -70,7 +70,7 @@ class WooCommerce_Order
             'total_discount' => wc_format_decimal($order->get_total_discount(), $dp),
             
             // @see https://stackoverflow.com/questions/46102428/get-orders-shipping-items-details-in-woocommerce-3
-            'shipping_methods' => $order->get_shipping_method(),
+            'shipping_methods' => $order->get_shipping_method(), // Get Only Shipping Title with impolde
             'payment_details' => array(
                 'method_id' => $order->get_payment_method(),
                 'method_title' => $order->get_payment_method_title(),
