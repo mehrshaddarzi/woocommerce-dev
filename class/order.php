@@ -68,6 +68,8 @@ class WooCommerce_Order
             'shipping_tax' => wc_format_decimal($order->get_shipping_tax(), $dp),
             'total_fees' => wc_format_decimal($order->get_total_fees(), $dp),
             'total_discount' => wc_format_decimal($order->get_total_discount(), $dp),
+            
+            // @see https://stackoverflow.com/questions/46102428/get-orders-shipping-items-details-in-woocommerce-3
             'shipping_methods' => $order->get_shipping_method(),
             'payment_details' => array(
                 'method_id' => $order->get_payment_method(),
